@@ -20,6 +20,7 @@ MKRoute *routeDetails;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.mapView.delegate = self;
     
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
@@ -27,17 +28,17 @@ MKRoute *routeDetails;
     self.locationManager.delegate = self;
     // Check for iOS 8. Without this guard the code will crash with "unknown selector" on iOS 7.
     if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        NSLog(@"Request with authorization");
         [self.locationManager requestWhenInUseAuthorization];
+        [self InitCurrLocation];
     }
     [self.locationManager startUpdatingLocation];
     
-    self.mapView.delegate = self;
     // self.endAddress.delegate = self;
     [self.endAddress addTarget:self.endAddress
                         action:@selector(resignFirstResponder)
               forControlEvents:UIControlEventEditingDidEndOnExit];
-    
-    [self InitCurrLocation];
+    //[self InitCurrLocation];
 }
 
 // Delegate method
@@ -46,7 +47,7 @@ MKRoute *routeDetails;
     float latitude = loc.coordinate.latitude;
     float longitude = loc.coordinate.longitude;
     NSLog(@"Latitude: %.8f",latitude);
-    NSLog(@"LOngitude: %.8f",longitude);
+    NSLog(@"Longitude: %.8f",longitude);
 }
 
 - (IBAction)searchBox:(UITextField *)sender {
@@ -55,6 +56,10 @@ MKRoute *routeDetails;
         if (error) {
             NSLog(@"%@", error);
         } else {
+            CGRect newFrame = self.mapView.frame;
+            newFrame.size = CGSizeMake(23.0, 50.0);
+            self.mapView.frame = newFrame;
+            
             thePlacemark = [placemarks lastObject];
             float spanX = 0.00725;
             float spanY = 0.00725;
@@ -66,12 +71,6 @@ MKRoute *routeDetails;
             [self addAnnotation:thePlacemark];
         }
     }];
-}
-
-- (CLLocation *) FindCurrPlacemark
-{
-    CLLocation *curr = [[CLLocation alloc] initWithLatitude:37.41 longitude:-122.08];
-    return curr;
 }
 
 - (void) InitCurrLocation {
@@ -150,7 +149,7 @@ MKRoute *routeDetails;
     MKDirections *directions = [[MKDirections alloc] initWithRequest:directionsRequest];
     [directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
         if (error) {
-            NSLog(@"Error %@", error.description);
+            NSLog(@"RouteButtonPressed: Error %@", error.description);
         } else {
             routeDetails = response.routes.lastObject;
             [self.mapView addOverlay:routeDetails.polyline];
@@ -175,6 +174,7 @@ MKRoute *routeDetails;
     self.transportLabel.text = nil;
     self.steps.text = nil;
     [self.mapView removeOverlay:routeDetails.polyline];
+    [self.mapView removeAnnotations:self.mapView.annotations];
 }
 
 
