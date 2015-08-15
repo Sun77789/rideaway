@@ -1,0 +1,14 @@
+{
+  "global": {
+    "parseVersion": "1.5.0"
+  },
+  "applications": {
+    "Rideway": {
+      "applicationId": "0GgSojokFNkQJi5HWFANFAlyqU9ZWe87UgZglQUH",
+      "masterKey": "Id9edSTsNT82xp2pTg08bgyw9kfQm2PJ55UvL2vT"
+    },
+    "_default": {
+      "link": "Rideway"
+    }
+  }
+}
