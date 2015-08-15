@@ -252,4 +252,247 @@ MKRoute *routeDetails;
 }
 
 
+/* Matt's changes */
+typedef struct{
+    double dval;
+    int index;
+    
+    
+}indexed_double;
+
+int compare(const void *p, const void *q){
+    indexed_double a = *(const indexed_double *)p;
+    indexed_double b = *(const indexed_double *)q;
+    
+    double x=a.dval;
+    double y=b.dval;
+    
+    /* to avoid undefined behaviour through signed integer overflow,
+     avoid: return x - y; */
+    int ret;
+    if (x == y)
+        // ret = (m < n) ? -1 : 1;
+        ret=0;
+    else
+        ret = (x > y) ? -1 : 1;
+    
+    return ret;
+}
+
+
+
+
+
+void sort_doubles(indexed_double *a,size_t n){
+    int (*fptr)(const void *p,const void *q);
+    fptr=&compare;
+    
+    qsort(a,n,sizeof(indexed_double),fptr);
+}
+
+
+
+void sortRouteCurvatures(NSMutableArray *routes){
+    
+    int i,j=0;
+    
+    
+    NSUInteger numroutes=[routes count];
+    
+    
+    double *maxCurvature=malloc(numroutes*sizeof(double));
+    
+    double *avgCurvature=malloc(numroutes*sizeof(double));
+    
+    int routeCounter=0;
+    
+    for(MKRoute *route in routes){
+        
+        MKPolyline *routePoly=[route polyline];
+        
+        NSUInteger numPointsInRoute=[routePoly pointCount];
+        
+        CLLocationCoordinate2D *mapCoordinatesInRoute=malloc(numPointsInRoute*sizeof(CLLocationCoordinate2D));//
+        
+        MKMapPoint *pointsInRoute=malloc(numPointsInRoute*sizeof(MKMapPoint));//
+        
+        NSRange ptRange=NSMakeRange(0, numPointsInRoute);
+        [routePoly getCoordinates:pointsInRoute range:ptRange];
+        
+        for(i=0;i<numPointsInRoute;i++){
+            pointsInRoute[i]=MKMapPointForCoordinate(mapCoordinatesInRoute[i]);
+        }
+        
+        double *localCurvature=malloc(numPointsInRoute*sizeof(double));
+        
+        double *dispersedLocalCurvature=malloc(numPointsInRoute*sizeof(double));
+        
+        
+        
+        double max=0;
+        
+        
+        for(i=1;i<numPointsInRoute-1;i++){
+            
+            double d2x=pointsInRoute[i+1].x-2*pointsInRoute[i].x+pointsInRoute[i-1].x;
+            double d2y=pointsInRoute[i+1].y-2*pointsInRoute[i].y+pointsInRoute[i-1].y;
+            
+            localCurvature[i]=sqrt(d2x*d2x+d2y*d2y);
+            for(j=0;j<5;j++){
+                dispersedLocalCurvature[0]=localCurvature[j];
+            }
+            
+            if(i<=5){
+                dispersedLocalCurvature[i]=localCurvature[i+5]+dispersedLocalCurvature[i-1];
+            }
+            
+            if(i>10){
+                dispersedLocalCurvature[i]=dispersedLocalCurvature[i-1]-localCurvature[i-5]+localCurvature[i+5];
+            }
+            avgCurvature[routeCounter]+=localCurvature[i]/(numPointsInRoute);
+            
+            if(dispersedLocalCurvature[i]>max){
+                max=dispersedLocalCurvature[i];
+            }
+            
+        }
+        
+        
+        maxCurvature[routeCounter]=max;
+        
+        routeCounter++;
+        
+        free(localCurvature);
+        free(pointsInRoute);
+        free(mapCoordinatesInRoute);
+        
+    }
+    
+    
+    
+    indexed_double *orderedRoutes=malloc(numroutes*sizeof(indexed_double));
+    for(i=0;i<numroutes;i++){
+        orderedRoutes[i].dval=avgCurvature[i]+maxCurvature[i];
+        orderedRoutes[i].index=i;
+    }
+    
+    sort_doubles(orderedRoutes, numroutes);
+    
+    
+    NSMutableArray *sortedArray=[[NSMutableArray alloc]init];
+    
+    for(i=0;i<numroutes;i++){
+        [sortedArray addObject:routes[orderedRoutes[i].index]];
+    }
+    
+    free(maxCurvature);
+    free(avgCurvature);
+    free(orderedRoutes);
+    
+}
+
+
+
+NSArray *feelingAdventurous(CLLocation *myLocation, int radius, int step){
+    
+    
+    radius=M_PI*radius/4;
+    
+    
+    MKMapPoint myPoint=MKMapPointForCoordinate([myLocation coordinate]);
+    
+    
+    MKMapRect region1, region2, region3, region4;
+    
+    
+    region1.origin.x=myPoint.x-radius-step;
+    region1.origin.y=myPoint.y-radius-step;
+    
+    region2.origin.x=myPoint.x-radius;
+    region2.origin.y=myPoint.y-radius-step;
+    
+    region3.origin.x=myPoint.x+radius;
+    region3.origin.y=myPoint.y-radius-step;
+    
+    region4.origin.x=myPoint.x-radius;
+    region4.origin.y=myPoint.y+radius;
+    
+    region1.size.width=step;
+    region1.size.height=2*(radius+step);
+    
+    region2.size.width=2*radius;
+    region2.size.height=step;
+    
+    region3.size.width=step;
+    region3.size.height=2*(radius+step);
+    
+    region4.size.width=2*radius;
+    region4.size.height=step;
+    
+    
+    
+    MKCoordinateRegion searchRegion1=MKCoordinateRegionForMapRect(region1);
+    MKCoordinateRegion searchRegion2=MKCoordinateRegionForMapRect(region2);
+    MKCoordinateRegion searchRegion3=MKCoordinateRegionForMapRect(region3);
+    MKCoordinateRegion searchRegion4=MKCoordinateRegionForMapRect(region4);
+    
+    MKLocalSearchRequest *request1=[[MKLocalSearchRequest alloc]init];
+    MKLocalSearchRequest *request2=[[MKLocalSearchRequest alloc]init];
+    MKLocalSearchRequest *request3=[[MKLocalSearchRequest alloc]init];
+    MKLocalSearchRequest *request4=[[MKLocalSearchRequest alloc]init];
+    
+    
+    request1.naturalLanguageQuery=@"points of interest";
+    request2.naturalLanguageQuery=@"points of interest";
+    request3.naturalLanguageQuery=@"points of interest";
+    request4.naturalLanguageQuery=@"points of interest";
+    request1.region=searchRegion1;
+    request2.region=searchRegion1;
+    request3.region=searchRegion1;
+    request4.region=searchRegion1;
+    
+    
+    
+    MKLocalSearch *search1=[[MKLocalSearch alloc]initWithRequest:request1];
+    MKLocalSearch *search2=[[MKLocalSearch alloc]initWithRequest:request2];
+    MKLocalSearch *search3=[[MKLocalSearch alloc]initWithRequest:request3];
+    MKLocalSearch *search4=[[MKLocalSearch alloc]initWithRequest:request4];
+    
+    
+    NSMutableArray *responseArrays;
+    
+    
+    MKLocalSearchCompletionHandler completionHandler=^(MKLocalSearchResponse *response, NSError *error){
+        
+        if(error!=nil){
+            return;
+        }else{
+            
+            [responseArrays addObject:response.mapItems];
+            
+        }
+        
+    };
+    
+    [search1 startWithCompletionHandler:completionHandler];
+    [search2 startWithCompletionHandler:completionHandler];
+    [search3 startWithCompletionHandler:completionHandler];
+    [search4 startWithCompletionHandler:completionHandler];
+    
+    
+    NSMutableArray *arrayOfAllRoutes=[[NSMutableArray alloc]init];
+    
+    
+    for(NSArray *mapItemArray in responseArrays){
+        for(MKMapItem *map in mapItemArray){
+            [arrayOfAllRoutes addObject:map];
+        }
+    }
+    
+    sortRouteCurvatures(arrayOfAllRoutes);
+    NSArray *routes=[arrayOfAllRoutes copy];
+    return routes;
+    
+}
+
 @end

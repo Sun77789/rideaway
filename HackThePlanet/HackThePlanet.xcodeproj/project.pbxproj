@@ -19,6 +19,7 @@
 		55FE91021B7F12C20098B943 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FE91011B7F12C20098B943 /* Social.framework */; };
 		55FE910A1B7F2E6E0098B943 /* Facebook.plist in Resources */ = {isa = PBXBuildFile; fileRef = 55FE91091B7F2E6E0098B943 /* Facebook.plist */; };
 		A4107F8A1B7FED260022A4FC /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = A4107F891B7FED260022A4FC /* back.png */; };
+		A4107F8E1B8001450022A4FC /* kiss_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = A4107F8C1B8001450022A4FC /* kiss_fft.c */; };
 		A48597911B7F0C37009D5822 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A48597901B7F0C37009D5822 /* main.m */; };
 		A48597941B7F0C37009D5822 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A48597931B7F0C37009D5822 /* AppDelegate.m */; };
 		A48597971B7F0C37009D5822 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A48597961B7F0C37009D5822 /* ViewController.m */; };
@@ -103,6 +104,9 @@
 		55FE91011B7F12C20098B943 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		55FE91091B7F2E6E0098B943 /* Facebook.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Facebook.plist; sourceTree = "<group>"; };
 		A4107F891B7FED260022A4FC /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
+		A4107F8B1B8001450022A4FC /* _kiss_fft_guts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _kiss_fft_guts.h; sourceTree = "<group>"; };
+		A4107F8C1B8001450022A4FC /* kiss_fft.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = kiss_fft.c; sourceTree = "<group>"; };
+		A4107F8D1B8001450022A4FC /* kiss_fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiss_fft.h; sourceTree = "<group>"; };
 		A485978B1B7F0C37009D5822 /* HackThePlanet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HackThePlanet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A485978F1B7F0C37009D5822 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A48597901B7F0C37009D5822 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -251,6 +255,9 @@
 				A4B19DDC1B7FC07F009DE5D6 /* images */,
 				A4A2512D1B7F241900EC57BA /* AddFriendViewController.h */,
 				A4A2512E1B7F241900EC57BA /* AddFriendViewController.m */,
+				A4107F8B1B8001450022A4FC /* _kiss_fft_guts.h */,
+				A4107F8C1B8001450022A4FC /* kiss_fft.c */,
+				A4107F8D1B8001450022A4FC /* kiss_fft.h */,
 				A48597B81B7F0C59009D5822 /* LoginViewController.h */,
 				A48597B91B7F0C59009D5822 /* LoginViewController.m */,
 				A48597921B7F0C37009D5822 /* AppDelegate.h */,
@@ -452,6 +459,7 @@
 				A48597971B7F0C37009D5822 /* ViewController.m in Sources */,
 				A48597941B7F0C37009D5822 /* AppDelegate.m in Sources */,
 				A48597911B7F0C37009D5822 /* main.m in Sources */,
+				A4107F8E1B8001450022A4FC /* kiss_fft.c in Sources */,
 				A4B19E011B7FE0F5009DE5D6 /* MenuViewController.m in Sources */,
 				A4A2512F1B7F241900EC57BA /* AddFriendViewController.m in Sources */,
 				A4B19DEE1B7FC967009DE5D6 /* PageContentViewController.m in Sources */,

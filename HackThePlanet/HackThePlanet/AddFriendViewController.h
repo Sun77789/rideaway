@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
+#import "kiss_fft.h"
 
 @interface AddFriendViewController : UIViewController
 
