@@ -18,6 +18,7 @@
 		A4D9A7E51B7EF71600FEC6F2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4D9A7E41B7EF71600FEC6F2 /* CoreGraphics.framework */; };
 		A4D9A7E71B7EF72200FEC6F2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4D9A7E61B7EF72200FEC6F2 /* UIKit.framework */; };
 		A4D9A7E91B7EF72800FEC6F2 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4D9A7E81B7EF72800FEC6F2 /* CoreLocation.framework */; };
+		A4D9A7F71B7F07E700FEC6F2 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D9A7F61B7F07E700FEC6F2 /* LoginViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,8 @@
 		A4D9A7E41B7EF71600FEC6F2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		A4D9A7E61B7EF72200FEC6F2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A4D9A7E81B7EF72800FEC6F2 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		A4D9A7F51B7F07E700FEC6F2 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = ../LoginViewController.h; sourceTree = "<group>"; };
+		A4D9A7F61B7F07E700FEC6F2 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = ../LoginViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +100,8 @@
 		A4D9A7BB1B7EF6E300FEC6F2 /* HackThePlanet */ = {
 			isa = PBXGroup;
 			children = (
+				A4D9A7F51B7F07E700FEC6F2 /* LoginViewController.h */,
+				A4D9A7F61B7F07E700FEC6F2 /* LoginViewController.m */,
 				A4D9A7C01B7EF6E300FEC6F2 /* AppDelegate.h */,
 				A4D9A7C11B7EF6E300FEC6F2 /* AppDelegate.m */,
 				A4D9A7C31B7EF6E300FEC6F2 /* ViewController.h */,
@@ -235,6 +240,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4D9A7F71B7F07E700FEC6F2 /* LoginViewController.m in Sources */,
 				A4D9A7C51B7EF6E300FEC6F2 /* ViewController.m in Sources */,
 				A4D9A7C21B7EF6E300FEC6F2 /* AppDelegate.m in Sources */,
 				A4D9A7BF1B7EF6E300FEC6F2 /* main.m in Sources */,
@@ -428,6 +434,7 @@
 				A4D9A7DE1B7EF6E300FEC6F2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A4D9A7DF1B7EF6E300FEC6F2 /* Build configuration list for PBXNativeTarget "HackThePlanetTests" */ = {
 			isa = XCConfigurationList;
@@ -436,6 +443,7 @@
 				A4D9A7E11B7EF6E300FEC6F2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
