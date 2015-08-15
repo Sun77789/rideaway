@@ -19,6 +19,8 @@
 		55FE90FE1B7F12A80098B943 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FE90FD1B7F12A80098B943 /* libsqlite3.dylib */; };
 		55FE91001B7F12B60098B943 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FE90FF1B7F12B60098B943 /* Accounts.framework */; };
 		55FE91021B7F12C20098B943 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FE91011B7F12C20098B943 /* Social.framework */; };
+		55FE91041B7F29C40098B943 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FE91031B7F29C40098B943 /* FBSDKCoreKit.framework */; };
+		55FE910A1B7F2E6E0098B943 /* Facebook.plist in Resources */ = {isa = PBXBuildFile; fileRef = 55FE91091B7F2E6E0098B943 /* Facebook.plist */; };
 		A48597911B7F0C37009D5822 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A48597901B7F0C37009D5822 /* main.m */; };
 		A48597941B7F0C37009D5822 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A48597931B7F0C37009D5822 /* AppDelegate.m */; };
 		A48597971B7F0C37009D5822 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A48597961B7F0C37009D5822 /* ViewController.m */; };
@@ -57,6 +59,8 @@
 		55FE90FD1B7F12A80098B943 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		55FE90FF1B7F12B60098B943 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		55FE91011B7F12C20098B943 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		55FE91031B7F29C40098B943 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		55FE91091B7F2E6E0098B943 /* Facebook.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Facebook.plist; sourceTree = "<group>"; };
 		A485978B1B7F0C37009D5822 /* HackThePlanet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HackThePlanet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A485978F1B7F0C37009D5822 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A48597901B7F0C37009D5822 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -87,6 +91,7 @@
 			files = (
 				55FE90F01B7F12320098B943 /* AudioToolbox.framework in Frameworks */,
 				55FE90F21B7F12380098B943 /* CFNetwork.framework in Frameworks */,
+				55FE91041B7F29C40098B943 /* FBSDKCoreKit.framework in Frameworks */,
 				A48597BE1B7F0DA2009D5822 /* CoreGraphics.framework in Frameworks */,
 				A48597B71B7F0C49009D5822 /* CoreLocation.framework in Frameworks */,
 				55FE90F41B7F12540098B943 /* QuartzCore.framework in Frameworks */,
@@ -117,6 +122,7 @@
 		A48597821B7F0C37009D5822 = {
 			isa = PBXGroup;
 			children = (
+				55FE91091B7F2E6E0098B943 /* Facebook.plist */,
 				55FE91011B7F12C20098B943 /* Social.framework */,
 				55FE90FF1B7F12B60098B943 /* Accounts.framework */,
 				55FE90FD1B7F12A80098B943 /* libsqlite3.dylib */,
@@ -134,6 +140,7 @@
 				A485978D1B7F0C37009D5822 /* HackThePlanet */,
 				A48597A71B7F0C37009D5822 /* HackThePlanetTests */,
 				A485978C1B7F0C37009D5822 /* Products */,
+				55FE91031B7F29C40098B943 /* FBSDKCoreKit.framework */,
 				55FE90EB1B7F11DD0098B943 /* Bolts.framework */,
 				55FE90EC1B7F11DD0098B943 /* Parse.framework */,
 			);
@@ -274,6 +281,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55FE910A1B7F2E6E0098B943 /* Facebook.plist in Resources */,
 				A485979A1B7F0C37009D5822 /* Main.storyboard in Resources */,
 				A485979F1B7F0C37009D5822 /* LaunchScreen.xib in Resources */,
 				A485979C1B7F0C37009D5822 /* Images.xcassets in Resources */,

@@ -1,0 +1,13 @@
+<key>CFBundleURLTypes</key>
+<array>
+  <dict>
+    <key>CFBundleURLSchemes</key>
+    <array>
+      <string>fb1154240881259744</string>
+    </array>
+  </dict>
+</array>
+<key>FacebookAppID</key>
+<string>1154240881259744</string>
+<key>FacebookDisplayName</key>
+<string>HTP</string>
