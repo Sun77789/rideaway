@@ -22,7 +22,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="DlD-lS-cJO" kind="show" id="Rv9-Of-N7e"/>
+                                    <segue destination="YaR-RB-tgB" kind="presentation" id="Rv9-Of-N7e"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -46,23 +46,50 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Eya-4Z-mnM">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Eya-4Z-mnM">
                                 <rect key="frame" x="0.0" y="72" width="375" height="575"/>
                             </mapView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zoC-Ao-iEO">
                                 <rect key="frame" x="30" y="82" width="315" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="searchBox:" destination="DlD-lS-cJO" eventType="editingDidEnd" id="f81-vi-ORQ"/>
+                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="My Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zDq-sC-0vu">
-                                <rect key="frame" x="141" y="615" width="92" height="21"/>
+                                <rect key="frame" x="141" y="588" width="92" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dUm-fw-5MT">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <items>
+                                    <barButtonItem title="Get Route" id="bV8-IP-M5R"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="IGA-3j-zmr"/>
+                                    <barButtonItem style="plain" id="MT3-Ty-gpN">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="hIl-Ln-m1Q">
+                                            <rect key="frame" x="272" y="7" width="82" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title="Clear Route">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                        </button>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="ZfT-uj-XeL">
+                        <barButtonItem key="rightBarButtonItem" title="Invite Friends" id="Dhh-Q7-U9o">
+                            <connections>
+                                <segue destination="Mqb-8m-rhH" kind="show" id="CZv-zo-Pzi"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="endAddress" destination="zoC-Ao-iEO" id="xk5-dE-l5R"/>
                         <outlet property="mapView" destination="Eya-4Z-mnM" id="vY8-tc-Q3d"/>
@@ -71,7 +98,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MW0-cy-cQf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1523.5" y="351.5"/>
+            <point key="canvasLocation" x="2110.5" y="351.5"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="PGP-d4-Vov">
+            <objects>
+                <viewController id="Mqb-8m-rhH" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Rh7-EY-8Gw"/>
+                        <viewControllerLayoutGuide type="bottom" id="zeh-5b-BUf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9YH-1f-PXi">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a5y-Pz-iK5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2678.5" y="351.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="CRQ-56-RSr">
@@ -91,6 +136,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xvj-Dd-gok" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="254" y="-341"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="cOc-Tk-frO">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YaR-RB-tgB" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="1KK-ry-4DP">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="DlD-lS-cJO" kind="relationship" relationship="rootViewController" id="LIH-M8-qDT"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="p5W-Yq-Neu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1523.5" y="351.5"/>
         </scene>
     </scenes>
 </document>

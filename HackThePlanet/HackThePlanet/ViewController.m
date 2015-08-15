@@ -15,6 +15,9 @@
 
 @implementation ViewController
 
+CLPlacemark *thePlacemark;
+MKRoute *routeDetails;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -23,6 +26,7 @@
     self.locationManager.delegate = self;
     [self.locationManager startUpdatingLocation];
     
+    self.mapView.delegate = self;
     // self.endAddress.delegate = self;
     [self.endAddress addTarget:self.endAddress
                         action:@selector(resignFirstResponder)
@@ -37,14 +41,15 @@
         if (error) {
             NSLog(@"%@", error);
         } else {
-            CLPlacemark *placemark = [placemarks lastObject];
+            thePlacemark = [placemarks lastObject];
             float spanX = 0.00725;
             float spanY = 0.00725;
             MKCoordinateRegion region;
-            region.center.latitude = placemark.location.coordinate.latitude;
-            region.center.longitude = placemark.location.coordinate.longitude;
+            region.center.latitude = thePlacemark.location.coordinate.latitude;
+            region.center.longitude = thePlacemark.location.coordinate.longitude;
             region.span = MKCoordinateSpanMake(spanX, spanY);
             [self.mapView setRegion:region animated:YES];
+            [self addAnnotation:thePlacemark];
         }
     }];
 }
@@ -78,6 +83,35 @@
     }];
 }
 
+
+- (void)addAnnotation:(CLPlacemark *)placemark {
+    MKPointAnnotation *point = [[MKPointAnnotation alloc] init];
+    point.coordinate = CLLocationCoordinate2DMake(placemark.location.coordinate.latitude, placemark.location.coordinate.longitude);
+    point.title = [placemark.addressDictionary objectForKey:@"Street"];
+    point.subtitle = [placemark.addressDictionary objectForKey:@"City"];
+    [self.mapView addAnnotation:point];
+}
+
+-(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+    // If it's the user location, just return nil.
+    if ([annotation isKindOfClass:[MKUserLocation class]])
+        return nil;
+    // Handle any custom annotations.
+    if ([annotation isKindOfClass:[MKPointAnnotation class]]) {
+        // Try to dequeue an existing pin view first.
+        MKPinAnnotationView *pinView = (MKPinAnnotationView*)[self.mapView dequeueReusableAnnotationViewWithIdentifier:@"CustomPinAnnotationView"];
+        if (!pinView)
+        {
+            // If an existing pin view was not available, create one.
+            pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"CustomPinAnnotationView"];
+            pinView.canShowCallout = YES;
+        } else {
+            pinView.annotation = annotation;
+        }
+        return pinView;
+    }
+    return nil;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

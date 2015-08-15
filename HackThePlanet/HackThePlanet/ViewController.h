@@ -10,7 +10,7 @@
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface ViewController : UIViewController <CLLocationManagerDelegate>
+@interface ViewController : UIViewController <MKMapViewDelegate,CLLocationManagerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *endAddress;
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;

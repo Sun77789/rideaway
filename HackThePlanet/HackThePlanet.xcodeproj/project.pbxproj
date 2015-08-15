@@ -189,6 +189,7 @@
 				TargetAttributes = {
 					A485978A1B7F0C37009D5822 = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = 53FPNQK53L;
 					};
 					A48597A31B7F0C37009D5822 = {
 						CreatedOnToolsVersion = 6.2;
@@ -434,6 +435,7 @@
 				A48597B01B7F0C37009D5822 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A48597B11B7F0C37009D5822 /* Build configuration list for PBXNativeTarget "HackThePlanetTests" */ = {
 			isa = XCConfigurationList;
@@ -442,6 +444,7 @@
 				A48597B31B7F0C37009D5822 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
