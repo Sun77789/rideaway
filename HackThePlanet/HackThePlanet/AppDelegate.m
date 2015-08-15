@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 @interface AppDelegate ()
 
@@ -19,28 +18,22 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
-    // [Optional] Power your app with Local Datastore. For more info, go to
-    // https://parse.com/docs/ios_guide#localdatastore/iOS
-    [Parse enableLocalDatastore];
-    
+    NSLog(@"I was here");
     // Initialize Parse.
-    [Parse setApplicationId:@"HwvT6xNcGyJpvMrm61sj4mYpJkcHMGS5DWpMbccE"
-                  clientKey:@"qf5PkiXz3jERj5Jz1QD9bdyV8yOIorGoguD2zDl1"];
+    [Parse setApplicationId:@"0GgSojokFNkQJi5HWFANFAlyqU9ZWe87UgZglQUH"
+                  clientKey:@"Eem0mGbiWXnuFYrkdbFGmYgtvLXUkIXMoI75nzXM"];
+    // Check if user is cached and linked to Facebook, if so, bypass login
     
-    // [Optional] Track statistics around application opens.
-    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    PFObject *testObject = [PFObject objectWithClassName:@"user"];
+    testObject[@"email"] = @"aubakirova.m.m@gmail.com";
+    testObject[@"cell"] = @"1231233322";
+    [testObject saveInBackground];
     
-    return [[FBSDKApplicationDelegate sharedInstance] application:application
-                                    didFinishLaunchingWithOptions:launchOptions];
+    return YES;
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    return [[FBSDKApplicationDelegate sharedInstance] application:application
-                                                          openURL:url
-                                                sourceApplication:sourceApplication
-                                                       annotation:annotation
-            ];
+    return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -59,7 +52,6 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    [FBSDKAppEvents activateApp];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

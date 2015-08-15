@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import <AddressBookUI/AddressBookUI.h>
 
-@interface ViewController () <CLLocationManagerDelegate>
+@interface ViewController () <CLLocationManagerDelegate,UIPopoverPresentationControllerDelegate>
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @end
 
@@ -175,6 +175,22 @@ MKRoute *routeDetails;
     self.steps.text = nil;
     [self.mapView removeOverlay:routeDetails.polyline];
     [self.mapView removeAnnotations:self.mapView.annotations];
+}
+
+- (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller {
+    
+    return UIModalPresentationNone;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"popoverSegue"]) {
+        UIViewController *dvc = segue.destinationViewController;
+        UIPopoverPresentationController *controller = dvc.popoverPresentationController;
+        if (controller) {
+            controller.delegate = self;
+        }
+    }
 }
 
 
