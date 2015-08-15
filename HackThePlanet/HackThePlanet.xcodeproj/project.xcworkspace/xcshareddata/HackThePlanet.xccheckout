@@ -5,7 +5,7 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>42E96C61-FD90-407F-8AA6-1240A938A569</string>
+	<string>B3C3E8B6-C72C-4F0C-8891-3988A0476404</string>
 	<key>IDESourceControlProjectName</key>
 	<string>HackThePlanet</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
@@ -14,11 +14,11 @@
 		<string>github.com:josephmilla/htp.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>HackThePlanet.xcodeproj</string>
+	<string>HackThePlanet/HackThePlanet.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>75A907F71580E379616BBBE599F1CCB2425485BA</key>
-		<string>../..</string>
+		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>github.com:josephmilla/htp.git</string>

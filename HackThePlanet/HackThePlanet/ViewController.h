@@ -14,9 +14,10 @@
 
 @property (strong, nonatomic) IBOutlet UITextField *endAddress;
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
+@property (strong, nonatomic) IBOutlet UILabel *myAddress;
+
 @property (strong, nonatomic) CLLocation *location;
 @property (strong, nonatomic) CLLocationManager *locationManager;
-@property (weak, nonatomic) IBOutlet UILabel *myAddress;
 
 @end
 

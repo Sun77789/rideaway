@@ -1,9 +1,9 @@
 //
 //  ViewController.m
-//  GetMapDirections
+//  HackThePlanet
 //
-//  Created by Malika Aubakirova on 8/8/15.
-//  Copyright (c) 2015 Malika Aubakirova. All rights reserved.
+//  Created by Malika Aubakirova on 8/14/15.
+//  Copyright (c) 2015 MLH_Team. All rights reserved.
 //
 
 #import "ViewController.h"
@@ -23,7 +23,7 @@
     self.locationManager.delegate = self;
     [self.locationManager startUpdatingLocation];
     
-    self.endAddress.delegate = self;
+    // self.endAddress.delegate = self;
     [self.endAddress addTarget:self.endAddress
                         action:@selector(resignFirstResponder)
               forControlEvents:UIControlEventEditingDidEndOnExit];
@@ -83,5 +83,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 @end

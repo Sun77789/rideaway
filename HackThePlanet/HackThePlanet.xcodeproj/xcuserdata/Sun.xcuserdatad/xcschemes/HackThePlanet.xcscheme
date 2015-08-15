@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A4D9A7B81B7EF6E300FEC6F2"
+               BlueprintIdentifier = "A485978A1B7F0C37009D5822"
                BuildableName = "HackThePlanet.app"
                BlueprintName = "HackThePlanet"
                ReferencedContainer = "container:HackThePlanet.xcodeproj">
@@ -28,7 +28,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A4D9A7D11B7EF6E300FEC6F2"
+               BlueprintIdentifier = "A48597A31B7F0C37009D5822"
                BuildableName = "HackThePlanetTests.xctest"
                BlueprintName = "HackThePlanetTests"
                ReferencedContainer = "container:HackThePlanet.xcodeproj">
@@ -46,7 +46,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A4D9A7D11B7EF6E300FEC6F2"
+               BlueprintIdentifier = "A48597A31B7F0C37009D5822"
                BuildableName = "HackThePlanetTests.xctest"
                BlueprintName = "HackThePlanetTests"
                ReferencedContainer = "container:HackThePlanet.xcodeproj">
@@ -56,7 +56,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A4D9A7B81B7EF6E300FEC6F2"
+            BlueprintIdentifier = "A485978A1B7F0C37009D5822"
             BuildableName = "HackThePlanet.app"
             BlueprintName = "HackThePlanet"
             ReferencedContainer = "container:HackThePlanet.xcodeproj">
@@ -76,7 +76,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A4D9A7B81B7EF6E300FEC6F2"
+            BlueprintIdentifier = "A485978A1B7F0C37009D5822"
             BuildableName = "HackThePlanet.app"
             BlueprintName = "HackThePlanet"
             ReferencedContainer = "container:HackThePlanet.xcodeproj">
@@ -95,7 +95,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A4D9A7B81B7EF6E300FEC6F2"
+            BlueprintIdentifier = "A485978A1B7F0C37009D5822"
             BuildableName = "HackThePlanet.app"
             BlueprintName = "HackThePlanet"
             ReferencedContainer = "container:HackThePlanet.xcodeproj">
