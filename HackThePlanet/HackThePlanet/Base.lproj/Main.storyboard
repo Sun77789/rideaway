@@ -100,10 +100,10 @@
             </objects>
             <point key="canvasLocation" x="2110.5" y="351.5"/>
         </scene>
-        <!--View Controller-->
+        <!--Add Friend View Controller-->
         <scene sceneID="PGP-d4-Vov">
             <objects>
-                <viewController id="Mqb-8m-rhH" sceneMemberID="viewController">
+                <viewController id="Mqb-8m-rhH" customClass="AddFriendViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Rh7-EY-8Gw"/>
                         <viewControllerLayoutGuide type="bottom" id="zeh-5b-BUf"/>
