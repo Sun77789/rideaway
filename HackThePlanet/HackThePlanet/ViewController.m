@@ -9,8 +9,8 @@
 #import "ViewController.h"
 #import <AddressBookUI/AddressBookUI.h>
 
-@interface ViewController ()
-
+@interface ViewController () <CLLocationManagerDelegate>
+@property (strong, nonatomic) CLLocationManager *locationManager;
 @end
 
 @implementation ViewController
@@ -23,7 +23,12 @@ MKRoute *routeDetails;
     
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    self.locationManager.distanceFilter = kCLDistanceFilterNone;
     self.locationManager.delegate = self;
+    // Check for iOS 8. Without this guard the code will crash with "unknown selector" on iOS 7.
+    if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        [self.locationManager requestWhenInUseAuthorization];
+    }
     [self.locationManager startUpdatingLocation];
     
     self.mapView.delegate = self;
@@ -33,6 +38,15 @@ MKRoute *routeDetails;
               forControlEvents:UIControlEventEditingDidEndOnExit];
     
     [self InitCurrLocation];
+}
+
+// Delegate method
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    CLLocation* loc = [locations lastObject]; // locations is guaranteed to have at least one object
+    float latitude = loc.coordinate.latitude;
+    float longitude = loc.coordinate.longitude;
+    NSLog(@"Latitude: %.8f",latitude);
+    NSLog(@"LOngitude: %.8f",longitude);
 }
 
 - (IBAction)searchBox:(UITextField *)sender {
@@ -54,16 +68,23 @@ MKRoute *routeDetails;
     }];
 }
 
+- (CLLocation *) FindCurrPlacemark
+{
+    CLLocation *curr = [[CLLocation alloc] initWithLatitude:37.41 longitude:-122.08];
+    return curr;
+}
+
 - (void) InitCurrLocation {
+    usleep(50000);
     float spanX = 0.01725;
     float spanY = 0.01725;
     self.location = self.locationManager.location;
-    NSLog(@"%@", self.locationManager.location.description); //A quick NSLog to show us that location data is being received.
+    NSLog(@"Current Location: %@", self.locationManager.location.description); //A quick NSLog to show us that location data is being received.
     MKCoordinateRegion region;
     region.center.latitude = self.locationManager.location.coordinate.latitude;
     region.center.longitude = self.locationManager.location.coordinate.longitude;
-    region.center.latitude = 37.41;
-    region.center.longitude = -122.08;
+    //region.center.latitude = 37.41;
+    //region.center.longitude = -122.08;
     
     region.span = MKCoordinateSpanMake(spanX, spanY);
     [self.mapView setRegion:region animated:YES];
@@ -92,6 +113,13 @@ MKRoute *routeDetails;
     [self.mapView addAnnotation:point];
 }
 
+-(MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
+    MKPolylineRenderer  * routeLineRenderer = [[MKPolylineRenderer alloc] initWithPolyline:routeDetails.polyline];
+    routeLineRenderer.strokeColor = [UIColor redColor];
+    routeLineRenderer.lineWidth = 5;
+    return routeLineRenderer;
+}
+
 -(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
     // If it's the user location, just return nil.
     if ([annotation isKindOfClass:[MKUserLocation class]])
@@ -112,6 +140,43 @@ MKRoute *routeDetails;
     }
     return nil;
 }
+
+- (IBAction)routeButtonPressed:(UIBarButtonItem *)sender {
+    MKDirectionsRequest *directionsRequest = [[MKDirectionsRequest alloc] init];
+    MKPlacemark *placemark = [[MKPlacemark alloc] initWithPlacemark:thePlacemark];
+    [directionsRequest setSource:[MKMapItem mapItemForCurrentLocation]];
+    [directionsRequest setDestination:[[MKMapItem alloc] initWithPlacemark:placemark]];
+    directionsRequest.transportType = MKDirectionsTransportTypeAutomobile;
+    MKDirections *directions = [[MKDirections alloc] initWithRequest:directionsRequest];
+    [directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
+        if (error) {
+            NSLog(@"Error %@", error.description);
+        } else {
+            routeDetails = response.routes.lastObject;
+            [self.mapView addOverlay:routeDetails.polyline];
+            self.destinationLabel.text = [placemark.addressDictionary objectForKey:@"Street"];
+            self.distanceLabel.text = [NSString stringWithFormat:@"%0.1f Miles", routeDetails.distance/1609.344];
+            self.transportLabel.text = [NSString stringWithFormat:@"%lu" , routeDetails.transportType];
+            self.allSteps = @"";
+            for (int i = 0; i < routeDetails.steps.count; i++) {
+                MKRouteStep *step = [routeDetails.steps objectAtIndex:i];
+                NSString *newStep = step.instructions;
+                self.allSteps = [self.allSteps stringByAppendingString:newStep];
+                self.allSteps = [self.allSteps stringByAppendingString:@"\n\n"];
+                self.steps.text = self.allSteps;
+            }
+        }
+    }];
+}
+
+- (IBAction)clearRoute:(UIBarButtonItem *)sender {
+    self.destinationLabel.text = nil;
+    self.distanceLabel.text = nil;
+    self.transportLabel.text = nil;
+    self.steps.text = nil;
+    [self.mapView removeOverlay:routeDetails.polyline];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

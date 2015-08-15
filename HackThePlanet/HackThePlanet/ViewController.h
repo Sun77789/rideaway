@@ -10,14 +10,19 @@
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface ViewController : UIViewController <MKMapViewDelegate,CLLocationManagerDelegate>
+@interface ViewController : UIViewController <MKMapViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *endAddress;
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) IBOutlet UILabel *myAddress;
 
 @property (strong, nonatomic) CLLocation *location;
-@property (strong, nonatomic) CLLocationManager *locationManager;
+@property (strong, nonatomic) IBOutlet UILabel *destinationLabel;
+@property (strong, nonatomic) IBOutlet UILabel *distanceLabel;
+@property (strong, nonatomic) IBOutlet UILabel *transportLabel;
+@property (strong, nonatomic) IBOutlet UITextView *steps;
+
+@property (strong, nonatomic) NSString *allSteps;
 
 @end
 
