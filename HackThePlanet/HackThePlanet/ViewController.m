@@ -30,7 +30,7 @@ MKRoute *routeDetails;
     if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         NSLog(@"Request with authorization");
         [self.locationManager requestWhenInUseAuthorization];
-        [self InitCurrLocation];
+        //[self InitCurrLocation];
     }
     [self.locationManager startUpdatingLocation];
     
@@ -38,7 +38,16 @@ MKRoute *routeDetails;
     [self.endAddress addTarget:self.endAddress
                         action:@selector(resignFirstResponder)
               forControlEvents:UIControlEventEditingDidEndOnExit];
-    //[self InitCurrLocation];
+    [self InitCurrLocation];
+    [self SetUpNavBar];
+}
+
+- (void) SetUpNavBar {
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    //UIColor *tintColor = [UIColor colorWithRed:235.0/255.0 green:69.0/255.0 blue:17.0/255.0 alpha:1];
+    UIColor *tintColor = [UIColor blackColor];
+    [[UINavigationBar appearance] setBarTintColor:tintColor];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
 }
 
 // Delegate method
@@ -51,11 +60,16 @@ MKRoute *routeDetails;
 }
 
 - (IBAction)searchBox:(UITextField *)sender {
+    [self DrawRouteGivenDst:sender.text];
+}
+
+- (void) DrawRouteGivenDst: (NSString *) text {
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    [geocoder geocodeAddressString:sender.text completionHandler:^(NSArray *placemarks, NSError *error) {
+    [geocoder geocodeAddressString:text completionHandler:^(NSArray *placemarks, NSError *error) {
         if (error) {
             NSLog(@"%@", error);
         } else {
+            [self Clear];
             CGRect newFrame = self.mapView.frame;
             newFrame.size = CGSizeMake(23.0, 50.0);
             self.mapView.frame = newFrame;
@@ -70,6 +84,7 @@ MKRoute *routeDetails;
             [self.mapView setRegion:region animated:YES];
             [self addAnnotation:thePlacemark];
         }
+        [self MarkRoute];
     }];
 }
 
@@ -168,7 +183,44 @@ MKRoute *routeDetails;
     }];
 }
 
+- (void) MarkRoute {
+    MKDirectionsRequest *directionsRequest = [[MKDirectionsRequest alloc] init];
+    MKPlacemark *placemark = [[MKPlacemark alloc] initWithPlacemark:thePlacemark];
+    [directionsRequest setSource:[MKMapItem mapItemForCurrentLocation]];
+    [directionsRequest setDestination:[[MKMapItem alloc] initWithPlacemark:placemark]];
+    directionsRequest.transportType = MKDirectionsTransportTypeAutomobile;
+    MKDirections *directions = [[MKDirections alloc] initWithRequest:directionsRequest];
+    [directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
+        if (error) {
+            NSLog(@"RouteButtonPressed: Error %@", error.description);
+        } else {
+            routeDetails = response.routes.lastObject;
+            [self.mapView addOverlay:routeDetails.polyline];
+            self.destinationLabel.text = [placemark.addressDictionary objectForKey:@"Street"];
+            self.distanceLabel.text = [NSString stringWithFormat:@"%0.1f Miles", routeDetails.distance/1609.344];
+            self.transportLabel.text = [NSString stringWithFormat:@"%lu" , routeDetails.transportType];
+            self.allSteps = @"";
+            for (int i = 0; i < routeDetails.steps.count; i++) {
+                MKRouteStep *step = [routeDetails.steps objectAtIndex:i];
+                NSString *newStep = step.instructions;
+                self.allSteps = [self.allSteps stringByAppendingString:newStep];
+                self.allSteps = [self.allSteps stringByAppendingString:@"\n\n"];
+                self.steps.text = self.allSteps;
+            }
+        }
+    }];
+}
+
 - (IBAction)clearRoute:(UIBarButtonItem *)sender {
+    self.destinationLabel.text = nil;
+    self.distanceLabel.text = nil;
+    self.transportLabel.text = nil;
+    self.steps.text = nil;
+    [self.mapView removeOverlay:routeDetails.polyline];
+    [self.mapView removeAnnotations:self.mapView.annotations];
+}
+
+- (void) Clear {
     self.destinationLabel.text = nil;
     self.distanceLabel.text = nil;
     self.transportLabel.text = nil;

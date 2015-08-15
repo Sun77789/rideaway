@@ -24,6 +24,7 @@
 
 @property (strong, nonatomic) NSString *allSteps;
 
+@property (strong, nonatomic) IBOutlet UINavigationItem *nav;
 
 @end
 
