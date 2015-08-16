@@ -11,5 +11,6 @@
 #import "kiss_fft.h"
 
 @interface AddFriendViewController : UIViewController
+@property (strong, nonatomic) IBOutlet UITextField *phoneNumber;
 
 @end

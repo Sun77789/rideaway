@@ -25,13 +25,33 @@
     // Dispose of any resources that can be recreated.
 }
 
-+ (void)SendSMS:(NSString *)num away:(NSString *)miles{
+- (IBAction)inviteAFriend:(id)sender {
+    NSString *miles = @"15";
+    NSString *name = @"Malika Aubakirova";
+    [PFCloud callFunctionInBackground:@"SMS"
+                       withParameters:@{
+                                        @"fromName": name,
+                                        @"friendname": @"Margaret Jack",
+                                        @"toNum": self.phoneNumber.text,
+                                        @"miles": miles,
+                                        }
+                                block:^(NSString *result, NSError *error) {
+                                    if (error) {
+                                        NSLog(@"ERROR: %@",error);
+                                    } else {
+                                        NSLog(@"%@", result);
+                                    }
+                                }];
+}
+
+
+- (void) SendSMS:(NSString *)num away:(NSString *)miles{
     NSString *name = @"Malika Aubakirova";
         [PFCloud callFunctionInBackground:@"SMS"
                            withParameters:@{
-                                            @"phonenum": @"3122135143",
-                                            @"username": name,
+                                            @"fromName": name,
                                             @"friendname": @"Margaret Jack",
+                                            @"toNum": @"3122135143",
                                             @"miles": miles,
                                             }
                                     block:^(NSString *result, NSError *error) {
@@ -206,9 +226,7 @@ NSURL *createURLWithCompressedRouteInfo(MKRoute *route){
     
 }
 
-MKRoute *getRouteFromCompressedUrl(NSURL * url){
-    
-    
+MKRoute *getRouteFromCompressedUrl(NSURL * url) {
     NSString *string=[url parameterString];
     
     void *voidBytes=[string cStringUsingEncoding:NSUTF8StringEncoding];
@@ -322,7 +340,6 @@ MKRoute *getRouteFromCompressedUrl(NSURL * url){
         float *magnitude=malloc(32*sizeof(float));
         
         for(i=0;i<32;i++){
-            
             magnitude[i]=sqrt(fout[i].r*fout[i].r+fout[i].i*fout[i].i);
         }
         
@@ -344,21 +361,8 @@ MKRoute *getRouteFromCompressedUrl(NSURL * url){
         }
         
         tracker++;
-        
-        
-        
-        
-        
-        
-        
-        
     }
-    
-    
-    
-    
     return routes[bestChoice];
-    
 }
 
 

@@ -303,6 +303,9 @@
                                 <state key="normal" title="Invite">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="inviteAFriend:" destination="Mqb-8m-rhH" eventType="touchUpInside" id="39A-fA-cco"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Phone Number" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cDF-da-6mn">
                                 <rect key="frame" x="53" y="106" width="214" height="30"/>
@@ -316,6 +319,9 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="568"/>
+                    <connections>
+                        <outlet property="phoneNumber" destination="cDF-da-6mn" id="Nbk-JK-cc3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a5y-Pz-iK5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
