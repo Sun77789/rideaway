@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		55A35A4F1B804DB300A187CE /* SparkTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A35A4A1B804DB300A187CE /* SparkTransaction.m */; };
-		55A35A501B804DB300A187CE /* SparkTransactionGet.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A35A4C1B804DB300A187CE /* SparkTransactionGet.m */; };
-		55A35A511B804DB300A187CE /* SparkTransactionPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A35A4E1B804DB300A187CE /* SparkTransactionPost.m */; };
-		55A35A541B804DBE00A187CE /* SparkCoreConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A35A531B804DBE00A187CE /* SparkCoreConnector.m */; };
 		55A35A561B80969100A187CE /* splash.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 55A35A551B80969100A187CE /* splash.jpg */; };
+		55A35A721B80BF0400A187CE /* AppDelegate.m.orig in Resources */ = {isa = PBXBuildFile; fileRef = 55A35A691B80BF0400A187CE /* AppDelegate.m.orig */; };
+		55A35A731B80BF0400A187CE /* SparkCoreConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A35A6B1B80BF0400A187CE /* SparkCoreConnector.m */; };
+		55A35A741B80BF0400A187CE /* SparkTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A35A6D1B80BF0400A187CE /* SparkTransaction.m */; };
+		55A35A751B80BF0400A187CE /* SparkTransactionGet.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A35A6F1B80BF0400A187CE /* SparkTransactionGet.m */; };
+		55A35A761B80BF0400A187CE /* SparkTransactionPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A35A711B80BF0400A187CE /* SparkTransactionPost.m */; };
 		55FE90F01B7F12320098B943 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FE90EF1B7F12320098B943 /* AudioToolbox.framework */; };
 		55FE90F21B7F12380098B943 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FE90F11B7F12380098B943 /* CFNetwork.framework */; };
 		55FE90F41B7F12540098B943 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FE90F31B7F12540098B943 /* QuartzCore.framework */; };
@@ -101,15 +102,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		55A35A491B804DB300A187CE /* SparkTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SparkTransaction.h; path = "../../../../Downloads/SparkCoreIOS-master/Sample/SparkCoreLib/SparkTransaction.h"; sourceTree = "<group>"; };
-		55A35A4A1B804DB300A187CE /* SparkTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SparkTransaction.m; path = "../../../../Downloads/SparkCoreIOS-master/Sample/SparkCoreLib/SparkTransaction.m"; sourceTree = "<group>"; };
-		55A35A4B1B804DB300A187CE /* SparkTransactionGet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SparkTransactionGet.h; path = "../../../../Downloads/SparkCoreIOS-master/Sample/SparkCoreLib/SparkTransactionGet.h"; sourceTree = "<group>"; };
-		55A35A4C1B804DB300A187CE /* SparkTransactionGet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SparkTransactionGet.m; path = "../../../../Downloads/SparkCoreIOS-master/Sample/SparkCoreLib/SparkTransactionGet.m"; sourceTree = "<group>"; };
-		55A35A4D1B804DB300A187CE /* SparkTransactionPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SparkTransactionPost.h; path = "../../../../Downloads/SparkCoreIOS-master/Sample/SparkCoreLib/SparkTransactionPost.h"; sourceTree = "<group>"; };
-		55A35A4E1B804DB300A187CE /* SparkTransactionPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SparkTransactionPost.m; path = "../../../../Downloads/SparkCoreIOS-master/Sample/SparkCoreLib/SparkTransactionPost.m"; sourceTree = "<group>"; };
-		55A35A521B804DBE00A187CE /* SparkCoreConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SparkCoreConnector.h; path = "../../../../Downloads/SparkCoreIOS-master/Sample/SparkCoreLib/SparkCoreConnector.h"; sourceTree = "<group>"; };
-		55A35A531B804DBE00A187CE /* SparkCoreConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SparkCoreConnector.m; path = "../../../../Downloads/SparkCoreIOS-master/Sample/SparkCoreLib/SparkCoreConnector.m"; sourceTree = "<group>"; };
 		55A35A551B80969100A187CE /* splash.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = splash.jpg; sourceTree = "<group>"; };
+		55A35A691B80BF0400A187CE /* AppDelegate.m.orig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = AppDelegate.m.orig; path = HackThePlanet/AppDelegate.m.orig; sourceTree = "<group>"; };
+		55A35A6A1B80BF0400A187CE /* SparkCoreConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SparkCoreConnector.h; path = HackThePlanet/SparkCoreConnector.h; sourceTree = "<group>"; };
+		55A35A6B1B80BF0400A187CE /* SparkCoreConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SparkCoreConnector.m; path = HackThePlanet/SparkCoreConnector.m; sourceTree = "<group>"; };
+		55A35A6C1B80BF0400A187CE /* SparkTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SparkTransaction.h; path = HackThePlanet/SparkTransaction.h; sourceTree = "<group>"; };
+		55A35A6D1B80BF0400A187CE /* SparkTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SparkTransaction.m; path = HackThePlanet/SparkTransaction.m; sourceTree = "<group>"; };
+		55A35A6E1B80BF0400A187CE /* SparkTransactionGet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SparkTransactionGet.h; path = HackThePlanet/SparkTransactionGet.h; sourceTree = "<group>"; };
+		55A35A6F1B80BF0400A187CE /* SparkTransactionGet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SparkTransactionGet.m; path = HackThePlanet/SparkTransactionGet.m; sourceTree = "<group>"; };
+		55A35A701B80BF0400A187CE /* SparkTransactionPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SparkTransactionPost.h; path = HackThePlanet/SparkTransactionPost.h; sourceTree = "<group>"; };
+		55A35A711B80BF0400A187CE /* SparkTransactionPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SparkTransactionPost.m; path = HackThePlanet/SparkTransactionPost.m; sourceTree = "<group>"; };
 		55FE90EF1B7F12320098B943 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		55FE90F11B7F12380098B943 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		55FE90F31B7F12540098B943 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -223,35 +225,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		55A35A461B804D6200A187CE /* SparkCore Lib */ = {
+		55A35A591B80BE1500A187CE /* SparkCore */ = {
 			isa = PBXGroup;
 			children = (
-				55A35A471B804D8000A187CE /* SparkCore Lib */,
 			);
-			name = "SparkCore Lib";
-			sourceTree = "<group>";
-		};
-		55A35A471B804D8000A187CE /* SparkCore Lib */ = {
-			isa = PBXGroup;
-			children = (
-				55A35A521B804DBE00A187CE /* SparkCoreConnector.h */,
-				55A35A531B804DBE00A187CE /* SparkCoreConnector.m */,
-				55A35A481B804D8D00A187CE /* Transactions */,
-			);
-			name = "SparkCore Lib";
-			sourceTree = "<group>";
-		};
-		55A35A481B804D8D00A187CE /* Transactions */ = {
-			isa = PBXGroup;
-			children = (
-				55A35A491B804DB300A187CE /* SparkTransaction.h */,
-				55A35A4A1B804DB300A187CE /* SparkTransaction.m */,
-				55A35A4B1B804DB300A187CE /* SparkTransactionGet.h */,
-				55A35A4C1B804DB300A187CE /* SparkTransactionGet.m */,
-				55A35A4D1B804DB300A187CE /* SparkTransactionPost.h */,
-				55A35A4E1B804DB300A187CE /* SparkTransactionPost.m */,
-			);
-			name = Transactions;
+			name = SparkCore;
 			sourceTree = "<group>";
 		};
 		55FE910C1B7F30AF0098B943 /* Frameworks */ = {
@@ -283,6 +261,15 @@
 		A48597821B7F0C37009D5822 = {
 			isa = PBXGroup;
 			children = (
+				55A35A691B80BF0400A187CE /* AppDelegate.m.orig */,
+				55A35A6A1B80BF0400A187CE /* SparkCoreConnector.h */,
+				55A35A6B1B80BF0400A187CE /* SparkCoreConnector.m */,
+				55A35A6C1B80BF0400A187CE /* SparkTransaction.h */,
+				55A35A6D1B80BF0400A187CE /* SparkTransaction.m */,
+				55A35A6E1B80BF0400A187CE /* SparkTransactionGet.h */,
+				55A35A6F1B80BF0400A187CE /* SparkTransactionGet.m */,
+				55A35A701B80BF0400A187CE /* SparkTransactionPost.h */,
+				55A35A711B80BF0400A187CE /* SparkTransactionPost.m */,
 				55FE91091B7F2E6E0098B943 /* Facebook.plist */,
 				55FE910C1B7F30AF0098B943 /* Frameworks */,
 				55FE90FD1B7F12A80098B943 /* libsqlite3.dylib */,
@@ -305,7 +292,7 @@
 		A485978D1B7F0C37009D5822 /* HackThePlanet */ = {
 			isa = PBXGroup;
 			children = (
-				55A35A461B804D6200A187CE /* SparkCore Lib */,
+				55A35A591B80BE1500A187CE /* SparkCore */,
 				A4B19DDC1B7FC07F009DE5D6 /* images */,
 				A4A2512D1B7F241900EC57BA /* AddFriendViewController.h */,
 				A4A2512E1B7F241900EC57BA /* AddFriendViewController.m */,
@@ -477,6 +464,7 @@
 				A485979F1B7F0C37009D5822 /* LaunchScreen.xib in Resources */,
 				A4B19DF41B7FDE5F009DE5D6 /* ride.png in Resources */,
 				55A35A561B80969100A187CE /* splash.jpg in Resources */,
+				55A35A721B80BF0400A187CE /* AppDelegate.m.orig in Resources */,
 				A4B19DE61B7FC23D009DE5D6 /* tut-02.png in Resources */,
 				A4B19DF11B7FDDF2009DE5D6 /* Menu-Reference.png in Resources */,
 				A4107F8A1B7FED260022A4FC /* back.png in Resources */,
@@ -519,18 +507,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55A35A741B80BF0400A187CE /* SparkTransaction.m in Sources */,
 				A48597BA1B7F0C59009D5822 /* LoginViewController.m in Sources */,
 				A48597971B7F0C37009D5822 /* ViewController.m in Sources */,
 				A48597941B7F0C37009D5822 /* AppDelegate.m in Sources */,
 				A48597911B7F0C37009D5822 /* main.m in Sources */,
-				55A35A4F1B804DB300A187CE /* SparkTransaction.m in Sources */,
-				55A35A511B804DB300A187CE /* SparkTransactionPost.m in Sources */,
 				A4107F8E1B8001450022A4FC /* kiss_fft.c in Sources */,
+				55A35A761B80BF0400A187CE /* SparkTransactionPost.m in Sources */,
+				55A35A731B80BF0400A187CE /* SparkCoreConnector.m in Sources */,
 				A4B19E011B7FE0F5009DE5D6 /* MenuViewController.m in Sources */,
-				55A35A541B804DBE00A187CE /* SparkCoreConnector.m in Sources */,
+				55A35A751B80BF0400A187CE /* SparkTransactionGet.m in Sources */,
 				A4A2512F1B7F241900EC57BA /* AddFriendViewController.m in Sources */,
 				A4B19DEE1B7FC967009DE5D6 /* PageContentViewController.m in Sources */,
-				55A35A501B804DB300A187CE /* SparkTransactionGet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
