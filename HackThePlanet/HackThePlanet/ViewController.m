@@ -34,6 +34,9 @@
 @property NSArray *colors;
 @property (strong, nonatomic) NSTimer *countDownTimer;
 @property (nonatomic) int secondsCount;
+
+@property (strong, nonatomic) NSString *dstLabel;
+
 @end
 
 @implementation ViewController
@@ -150,6 +153,7 @@ bool locationsearch;
 }
 
 - (IBAction)searchBox:(UITextField *)sender {
+    self.dstLabel = sender.text;
     [self DrawRouteGivenDst:sender.text startAt:nil];
 }
 
@@ -273,6 +277,7 @@ bool locationsearch;
             
             [self.mapView addOverlay:routeDetails.polyline];
             self.destinationLabel.text = [placemark.addressDictionary objectForKey:@"Street"];
+            
             self.distanceLabel.text = [NSString stringWithFormat:@"%0.1f Miles", routeDetails.distance/1609.344];
             self.transportLabel.text = [NSString stringWithFormat:@"%lu" , routeDetails.transportType];
             self.allSteps = @"";
@@ -383,7 +388,6 @@ bool locationsearch;
 }
 
 - (void) MarkRoute: (MKPlacemark *) start {
-    NSLog(@"DRAW FROM A DIFFERENT POINT");
     MKDirectionsRequest *directionsRequest = [[MKDirectionsRequest alloc] init];
     MKPlacemark *placemark = [[MKPlacemark alloc] initWithPlacemark:thePlacemark];
     [directionsRequest setSource:[[MKMapItem alloc] initWithPlacemark:start]];
@@ -439,6 +443,25 @@ bool locationsearch;
     if ([segue.identifier isEqualToString:@"popoverSegue"]) {
         AddFriendViewController *dvc = (AddFriendViewController *) segue.destinationViewController;
         [dvc setRouteDetails:routeDetails];
+        NSString *src = self.myAddress.text;
+        NSString *dst = self.dstLabel;
+        
+        NSString *srcURLTemp1 = [[src stringByReplacingOccurrencesOfString:@"\n" withString:@" "]
+                                  stringByReplacingOccurrencesOfString:@"CA 94043" withString:@""];
+        
+        NSString *srcURLTemp = [srcURLTemp1 stringByReplacingOccurrencesOfString:@"United States" withString:@""];
+        
+        NSString *srcURL = [srcURLTemp stringByReplacingOccurrencesOfString:@" " withString:@"%"];
+        
+        NSLog(@"SRC: %@ %@ %@ %@", src, srcURLTemp1, srcURLTemp, srcURL);
+        
+        NSString *dstURLTemp = [dst stringByReplacingOccurrencesOfString:@" " withString:@"%"];
+        NSString *dstURL = [dstURLTemp stringByReplacingOccurrencesOfString:@"CA%94043%United%States" withString:@""];
+        
+        
+        [dvc setSrc:srcURL];
+        [dvc setDst:dstURL];
+        
         UIPopoverPresentationController *controller = dvc.popoverPresentationController;
         if (controller) {
             controller.delegate = self;

@@ -31,7 +31,8 @@
     [user saveInBackground];
     
     NSString *name = @"Malika Aubakirova";
-    NSString *msg = @"Malika Aubakirova is inviting you to take a ride. Please, visit Rideaway.";
+    NSString *temp = @"Malika is inviting you to take a ride. Please, visit Rideaway at";
+    NSString *msg = [NSString stringWithFormat:@"%@ rideaway://%@?%@", temp, self.src, self.dst];
     //NSString *url = createURLWithCompressedRouteInfo(self.routeDetails);
     
     [PFCloud callFunctionInBackground:@"SMS"
@@ -162,199 +163,73 @@ NSArray *generateOrderedMeetingPoints(CLLocation *myLocation, CLLocation *yourLo
 }
 
 NSString *createURLWithCompressedRouteInfo(MKRoute *route){
+    int i=0;
+    
+    
     MKPolyline *pline=[route polyline];
     
     int numPoints=[pline pointCount];
     
-    MKMapPoint *points=[pline points];
     
-    MKMapPoint start=points[0];
-    MKMapPoint end=points[numPoints-1];
+    NSRange range=NSMakeRange(0, numPoints);
     
     
-    kiss_fft_cfg st=kiss_fft_alloc(2*numPoints, 0, NULL, NULL);
-    kiss_fft_cpx *fin=malloc(2*numPoints*sizeof(kiss_fft_cpx));
-    kiss_fft_cpx *fout=malloc(2*numPoints*sizeof(kiss_fft_cpx));
-    int i=0;
-    for(i=0;i<numPoints;i++) {
-        fin[i].r=points[i].x;
-        fin[i].i=points[i].y;
+    
+    CLLocationCoordinate2D *points=malloc(numPoints*sizeof(CLLocationCoordinate2D));
+    
+    
+    [pline getCoordinates:points range:range];
+    
+    CLLocationCoordinate2D start=points[0];
+    CLLocationCoordinate2D end=points[numPoints-1];
+    
+    float *byteInfo=malloc(4*sizeof(float)+1);
+    
+    byteInfo[0]=start.latitude;
+    byteInfo[1]=start.longitude;
+    byteInfo[2]=end.latitude;
+    byteInfo[3]=end.longitude;
+    
+    
+    
+    NSString *appString=[NSString stringWithFormat:@"rideaway://src="];
+    
+    for(i=0;i<4;i++){
+        NSString *numString=[NSString stringWithFormat:@"_%f",byteInfo[i]];
+        appString=[appString stringByAppendingString:numString];
     }
     
-    for(i=1;i<=numPoints;i++) {
-        fin[i].r=points[numPoints-i].x;
-        fin[i].i=points[numPoints-i].y;
-    }
     
-    
-    kiss_fft(st, fin, fout);
-    
-    
-    float *byteInfo=malloc(36*sizeof(float));
-    byteInfo[0]=start.x;
-    byteInfo[1]=start.y;
-    byteInfo[2]=end.x;
-    byteInfo[3]=end.y;
-    
-    
-    for(i=4;i<36;i++) {
-        byteInfo[i]=sqrt(fout[i].r*fout[i].r+fout[i].i*fout[i].i);
-    }
-    
-    NSString *appString=[NSString stringWithFormat:@"rideaway://"];
-    NSString *routeInfo=[[NSString alloc]initWithBytes:byteInfo length:36*sizeof(float) encoding:NSUTF8StringEncoding];
-    
-    NSString *urlString=[appString stringByAppendingString:routeInfo];
+    NSLog(@"%@", appString);
     
     
     free(byteInfo);
-    free(fin);
-    free(fout);
-    free(points);
-    kiss_fft_free(st);
     
-    return urlString;
+    
+    return appString;
 }
 
-MKRoute *getRouteFromCompressedUrl(NSURL * url) {
+void getRouteFromCompressedUrl(NSURL * url) {
     NSString *string=[url parameterString];
+    CLLocationCoordinate2D start, end;
     
-    void *voidBytes=[string cStringUsingEncoding:NSUTF8StringEncoding];
-    
-    float *pfftInfo=malloc(36*sizeof(float));
-    
-    memcpy(pfftInfo, voidBytes, 36*sizeof(float));
+    NSString *sourceString=[url absoluteString];
     
     
-    MKMapPoint start, end;
+    NSArray *seperatedStrings=[sourceString componentsSeparatedByString:@"_"];
     
-    start.x=pfftInfo[0];
-    start.y=pfftInfo[1];
-    end.x=pfftInfo[2];
-    end.y=pfftInfo[3];
-    
-    CLLocationCoordinate2D sc=MKCoordinateForMapPoint(start);
-    CLLocationCoordinate2D ec=MKCoordinateForMapPoint(end);
-    
-    CLLocation *startingLocation=[[CLLocation alloc] initWithLatitude:sc.latitude longitude:sc.longitude];
-    CLLocation *endingLocation=[[CLLocation alloc]initWithLatitude:ec.latitude longitude:ec.longitude];
-    
-    CLGeocoder *geocoder=[[CLGeocoder alloc]init];
-    
-    __block CLPlacemark *placemark1;
-    __block CLPlacemark *placemark2;
-    
-    
-    [geocoder reverseGeocodeLocation:startingLocation completionHandler:^(NSArray *placemarks, NSError *error) {
-        if(error){
-            NSLog(@"%@", [error localizedDescription]);
-        }
-        
-        placemark1 = [placemarks lastObject];
-        
-    }];
-    
-    [geocoder reverseGeocodeLocation:endingLocation completionHandler:^(NSArray *placemarks, NSError *error) {
-        if(error){
-            NSLog(@"%@", [error localizedDescription]);
-        }
-        
-        placemark2 = [placemarks lastObject];
-        
-    }];
-    
-    
-    MKMapItem *startItem=[[MKMapItem alloc]initWithPlacemark:placemark1];
-    MKMapItem *endItem=[[MKMapItem alloc]initWithPlacemark:placemark2];
-    
-    MKDirectionsRequest *request=[[MKDirectionsRequest alloc]init];
-    
-    [request setSource:startItem];
-    [request setDepartureDate:endItem];
-    
-    MKDirections *directions=[[MKDirections alloc]initWithRequest:request];
-    
-    NSArray *routes=[NSArray alloc];
-    
-    [directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
-        if (error) {
-            NSLog(@"Error %@", error.description);
-        } else {
-            [routes initWithArray:response.routes];
-            
-            
-        }}];
-    
-    
-    int tracker=0;
-    int bestChoice=0;
-    
-    float min=0;
-    
-    
-    for(MKRoute *route in routes){
-        
-        
-        float error=0;
-        
-        
-        MKPolyline *pline=[route polyline];
-        
-        int numPoints=[pline pointCount];
-        
-        MKMapPoint *points=[pline points];
-        
-        MKMapPoint start=points[0];
-        MKMapPoint end=points[numPoints-1];
-        
-        
-        kiss_fft_cfg st=kiss_fft_alloc(2*numPoints, 0, NULL, NULL);
-        kiss_fft_cpx *fin=malloc(2*numPoints*sizeof(kiss_fft_cpx));
-        kiss_fft_cpx *fout=malloc(2*numPoints*sizeof(kiss_fft_cpx));
-        int i=0;
-        for(i=0;i<numPoints;i++){
-            
-            fin[i].r=points[i].x;
-            fin[i].i=points[i].y;
-        }
-        for(i=1;i<=numPoints;i++){
-            
-            fin[i].r=points[numPoints-i].x;
-            fin[i].i=points[numPoints-i].y;
-        }
-        
-        
-        kiss_fft(st, fin, fout);
-        
-        
-        float *magnitude=malloc(32*sizeof(float));
-        
-        for(i=0;i<32;i++){
-            magnitude[i]=sqrt(fout[i].r*fout[i].r+fout[i].i*fout[i].i);
-        }
-        
-        
-        for(i=0;i<32;i++){
-            
-            error+=fabsf(magnitude[i]-pfftInfo[i+4]);
-            
-        }
-        
-        if(error<1.6){
-            return route;
-        }else{
-            if(error<min){
-                min=error;
-                bestChoice=tracker;
-                
-            }
-        }
-        
-        tracker++;
+    for(NSString *string in seperatedStrings){
+        NSLog(@"%@", string);
     }
-    return routes[bestChoice];
+    
+    
+    start.latitude=[[seperatedStrings objectAtIndex:1] floatValue];
+    start.longitude=[[seperatedStrings objectAtIndex:2] floatValue];
+    end.latitude=[[seperatedStrings objectAtIndex:3] floatValue];
+    end.longitude=[[seperatedStrings objectAtIndex:4] floatValue];
+    
+    
 }
-
 
 /*
 #pragma mark - Navigation

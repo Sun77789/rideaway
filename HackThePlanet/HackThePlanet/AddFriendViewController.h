@@ -14,4 +14,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *phoneNumber;
 @property (strong, nonatomic) MKRoute *routeDetails;
 
+@property (strong, nonatomic) NSString *src;
+@property (strong, nonatomic) NSString *dst;
+
 @end

@@ -8,6 +8,17 @@
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
 	<string>build.$(PRODUCT_NAME:rfc1034identifier)</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>rideaway</string>
+			</array>
+			<key>CFBundleURLName</key>
+			<string>com.htp.rideaway</string>
+		</dict>
+	</array>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
