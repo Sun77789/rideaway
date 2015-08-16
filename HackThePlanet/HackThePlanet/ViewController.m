@@ -67,9 +67,10 @@ bool locationsearch;
                 NSLog(@"%@", error);
             } else {
                 MKPlacemark *srcPlacement = [placemarks lastObject];
-                [self addAnnotation:srcPlacement andTitle:@"Malika's start"];
+                [self addAnnotation:srcPlacement andTitle:@"Bryan's start"];
                 [self DrawRouteGivenDst: self.dst startAt:srcPlacement];
             }
+            self.goButton.hidden = FALSE;
         }];
         
         [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -348,7 +349,6 @@ bool locationsearch;
 }
 
 - (IBAction)beginRouteNow:(id)sender {
-    if(self.dstLabel) {
         [self InitCurrLocation];
         CLLocation *loc_a = self.location;
         CLLocation *loc_b = thePlacemark.location;
@@ -357,7 +357,7 @@ bool locationsearch;
         
         self.countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerRun) userInfo:nil repeats:YES];
         
-        NSString *msg = @"Bryan just started his ride.";
+        NSString *msg = @"Malika just started her ride.";
         if(self.src) {
             [PFCloud callFunctionInBackground:@"SMS"
                                withParameters:@{
@@ -373,7 +373,7 @@ bool locationsearch;
                                             }
                                         }];
         }
-    }
+    
     self.goButton.hidden = TRUE;
     self.resetButton.hidden = FALSE;
 }
@@ -400,7 +400,7 @@ bool locationsearch;
     if(minutes == 5) {
         PFUser *user = [PFUser currentUser];
         NSString *name = user[@"name"];
-        NSString *msg = @"Malika Aubakirova is inviting you to take a ride. Please, visit Rideaway.";
+        NSString *msg = @"Bryan is inviting you to take a ride. Please, visit Rideaway.";
         //NSString *url = createURLWithCompressedRouteInfo(self.routeDetails);
         
         [PFCloud callFunctionInBackground:@"SMS"
