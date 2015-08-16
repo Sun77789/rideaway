@@ -165,6 +165,15 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Settings.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="fbz-Uz-2hL">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OaR-Ko-otE">
+                                <rect key="frame" x="0.0" y="8" width="44" height="40"/>
+                                <state key="normal" image="bblack.jpg">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="25x-5G-pPV" kind="show" id="Zm6-YS-cO3"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -405,6 +414,15 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Safety.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="icg-FI-BDU">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eKa-pk-8Wz">
+                                <rect key="frame" x="0.0" y="6" width="44" height="40"/>
+                                <state key="normal" image="bblack.jpg">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="25x-5G-pPV" kind="show" id="tjb-mG-wwv"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -442,6 +460,7 @@
         <image name="Safety.jpg" width="640" height="1136"/>
         <image name="Settings.jpg" width="640" height="1136"/>
         <image name="back.png" width="55" height="55"/>
+        <image name="bblack.jpg" width="55" height="55"/>
         <image name="challenge.png" width="186" height="210"/>
         <image name="pin.png" width="20" height="33"/>
         <image name="popup.png" width="487" height="245"/>
@@ -451,7 +470,7 @@
         <image name="start.png" width="106" height="115"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Hhr-ae-CiN"/>
+        <segue reference="tjb-mG-wwv"/>
         <segue reference="LIH-M8-qDT"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -13,6 +13,7 @@
 #import "SparkCoreConnector.h"
 #import "SparkTransactionPost.h"
 #import "SparkTransactionGet.h"
+#import <Parse/Parse.h>
 
 #define ACCESS_TOKEN @"2432dc921398e4a0b958b3b8a7262f5eba6a4458"
 #define DEVICE_ID @"54ff6b066667515123381367"
@@ -49,6 +50,15 @@ bool locationsearch;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self SetUpNavBar];
+    PFUser *user = [PFUser currentUser];
+    
+    if(!self.src && [user[@"url"] isEqualToString: @"true"]) {
+        if(!self.src) {
+            self.src = user[@"src"];
+            self.dst = user[@"dst"];
+        }
+    }
+    
     if(self.src && self.dst) {
         CLGeocoder *geocoder = [[CLGeocoder alloc] init];
         [geocoder geocodeAddressString:self.src completionHandler:^(NSArray *placemarks, NSError *error) {
@@ -60,6 +70,11 @@ bool locationsearch;
                 [self addAnnotation:srcPlacement andTitle:@"Malika's start"];
                 [self DrawRouteGivenDst: self.dst startAt:srcPlacement];
             }
+        }];
+        
+        [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            user[@"url"] = @"false";
+            [user saveInBackground];
         }];
     }
     
@@ -118,7 +133,6 @@ bool locationsearch;
 }
 
 -(void)sendRequestWithParameter:(NSString *)parameter {
-    NSLog(@"Params: %@",parameter);
     SparkTransactionPost *postTransaction = [[SparkTransactionPost alloc] initWithAccessToken:ACCESS_TOKEN deviceId:DEVICE_ID functionName:FUNCTION andParameters:parameter];
     
     [SparkCoreConnector connectToSparkAPIWithTransaction:postTransaction andHandler:^(NSURLResponse *response, NSDictionary *responseDictionary, NSError *error){
@@ -444,6 +458,7 @@ bool locationsearch;
         AddFriendViewController *dvc = (AddFriendViewController *) segue.destinationViewController;
         [dvc setRouteDetails:routeDetails];
         NSString *src = self.myAddress.text;
+        NSLog(@"My location: %@", src);
         NSString *dst = self.dstLabel;
         
         NSString *srcURLTemp1 = [[src stringByReplacingOccurrencesOfString:@"\n" withString:@" "]
@@ -453,7 +468,7 @@ bool locationsearch;
         NSString *srcURLTemp = [[srcURLTemp1 stringByReplacingOccurrencesOfString:@"CA" withString:@""]
                                 stringByReplacingOccurrencesOfString:@"United States" withString:@""];
         
-        NSString *srcURL = [srcURLTemp stringByReplacingOccurrencesOfString:@" " withString:@"%"];
+        NSString *srcURL = [srcURLTemp stringByReplacingOccurrencesOfString:@" " withString:@"-"];
         
         NSString *dstURLTemp = [dst stringByReplacingOccurrencesOfString:@" " withString:@"-"];
         NSString *dstURL = [dstURLTemp stringByReplacingOccurrencesOfString:@"CA%94043%United%States" withString:@""];

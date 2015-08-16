@@ -10,7 +10,7 @@
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import <AddressBookUI/AddressBookUI.h>
-
+#import <Parse/Parse.h>
 #import "ViewController.h"
 
 @interface LoginViewController () <CLLocationManagerDelegate>
@@ -22,7 +22,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if(self.src) {
+    PFUser *user = [PFUser currentUser];
+    
+    if(self.src || [user[@"url"] isEqualToString: @"true"]) {
         [self performSelector:@selector(showMainMenu) withObject:nil afterDelay:0.1];
     }
     
@@ -48,6 +50,11 @@
 }
 
 - (void)showMainMenu {
+    PFUser *user = [PFUser currentUser];
+    if(!self.src) {
+        self.src = user[@"src"];
+        self.dst = user[@"dst"];
+    }
     [self performSegueWithIdentifier:@"RideShare" sender:self];
 }
 
@@ -58,7 +65,6 @@
     self.locationManager.delegate = self;
     // Check for iOS 8. Without this guard the code will crash with "unknown selector" on iOS 7.
     if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
-        NSLog(@"Request with authorization");
         [self.locationManager requestWhenInUseAuthorization];
         //[self InitCurrLocation];
     }

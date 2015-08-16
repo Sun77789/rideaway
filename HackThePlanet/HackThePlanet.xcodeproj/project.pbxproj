@@ -89,6 +89,7 @@
 		A4B19E0B1B7FE453009DE5D6 /* Challenge.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A4B19E091B7FE453009DE5D6 /* Challenge.jpg */; };
 		A4B19E0D1B7FE5E3009DE5D6 /* pin.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B19E0C1B7FE5E3009DE5D6 /* pin.png */; };
 		A4B19E0E1B7FE5E3009DE5D6 /* pin.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B19E0C1B7FE5E3009DE5D6 /* pin.png */; };
+		A4C5701C1B80E233000A013E /* bblack.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A4C5701B1B80E233000A013E /* bblack.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -177,6 +178,7 @@
 		A4B19E061B7FE36C009DE5D6 /* Begin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Begin.png; sourceTree = "<group>"; };
 		A4B19E091B7FE453009DE5D6 /* Challenge.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Challenge.jpg; sourceTree = "<group>"; };
 		A4B19E0C1B7FE5E3009DE5D6 /* pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin.png; sourceTree = "<group>"; };
+		A4C5701B1B80E233000A013E /* bblack.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bblack.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -346,6 +348,7 @@
 		A4B19DDC1B7FC07F009DE5D6 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				A4C5701B1B80E233000A013E /* bblack.jpg */,
 				55A35A551B80969100A187CE /* splash.jpg */,
 				A4107F951B803CF10022A4FC /* popup.png */,
 				A4107F931B8030060022A4FC /* start.png */,
@@ -461,6 +464,7 @@
 				A4B19DE81B7FC23D009DE5D6 /* tut-03.png in Resources */,
 				A485979A1B7F0C37009D5822 /* Main.storyboard in Resources */,
 				A4107F961B803CF10022A4FC /* popup.png in Resources */,
+				A4C5701C1B80E233000A013E /* bblack.jpg in Resources */,
 				A485979F1B7F0C37009D5822 /* LaunchScreen.xib in Resources */,
 				A4B19DF41B7FDE5F009DE5D6 /* ride.png in Resources */,
 				55A35A561B80969100A187CE /* splash.jpg in Resources */,
