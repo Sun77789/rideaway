@@ -90,6 +90,7 @@
 		A4B19E0D1B7FE5E3009DE5D6 /* pin.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B19E0C1B7FE5E3009DE5D6 /* pin.png */; };
 		A4B19E0E1B7FE5E3009DE5D6 /* pin.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B19E0C1B7FE5E3009DE5D6 /* pin.png */; };
 		A4C5701C1B80E233000A013E /* bblack.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A4C5701B1B80E233000A013E /* bblack.jpg */; };
+		A4C5701E1B80F0E8000A013E /* reset.png in Resources */ = {isa = PBXBuildFile; fileRef = A4C5701D1B80F0E8000A013E /* reset.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -179,6 +180,8 @@
 		A4B19E091B7FE453009DE5D6 /* Challenge.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Challenge.jpg; sourceTree = "<group>"; };
 		A4B19E0C1B7FE5E3009DE5D6 /* pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin.png; sourceTree = "<group>"; };
 		A4C5701B1B80E233000A013E /* bblack.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bblack.jpg; sourceTree = "<group>"; };
+		A4C5701D1B80F0E8000A013E /* reset.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reset.png; sourceTree = "<group>"; };
+		A4C5701F1B80F4FD000A013E /* Hero Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hero Light.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -263,6 +266,7 @@
 		A48597821B7F0C37009D5822 = {
 			isa = PBXGroup;
 			children = (
+				A4C5701F1B80F4FD000A013E /* Hero Light.otf */,
 				55A35A691B80BF0400A187CE /* AppDelegate.m.orig */,
 				55A35A6A1B80BF0400A187CE /* SparkCoreConnector.h */,
 				55A35A6B1B80BF0400A187CE /* SparkCoreConnector.m */,
@@ -348,6 +352,7 @@
 		A4B19DDC1B7FC07F009DE5D6 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				A4C5701D1B80F0E8000A013E /* reset.png */,
 				A4C5701B1B80E233000A013E /* bblack.jpg */,
 				55A35A551B80969100A187CE /* splash.jpg */,
 				A4107F951B803CF10022A4FC /* popup.png */,
@@ -455,6 +460,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A4107F901B8019820022A4FC /* Settings.jpg in Resources */,
+				A4C5701E1B80F0E8000A013E /* reset.png in Resources */,
 				A4B19E041B7FE16E009DE5D6 /* ride-tap.png in Resources */,
 				A4B19E071B7FE36C009DE5D6 /* Begin.png in Resources */,
 				A4B19DE41B7FC23D009DE5D6 /* tut-01.png in Resources */,

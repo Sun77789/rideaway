@@ -21,6 +21,7 @@
                 forState:UIControlStateSelected];
     [self.rideawayButton setImage:[UIImage imageNamed:@"ride.png"]
                 forState:UIControlStateNormal];
+    [self.navigationController setNavigationBarHidden:YES];
 }
 
 - (void)didReceiveMemoryWarning {

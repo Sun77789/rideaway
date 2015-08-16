@@ -297,7 +297,16 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="pin.png" translatesAutoresizingMaskIntoConstraints="NO" id="yb7-M4-nOb">
                                 <rect key="frame" x="280" y="77" width="15" height="25"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S7D-f9-O9t">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y9u-Qg-L8v">
+                                <rect key="frame" x="245" y="472" width="50" height="55"/>
+                                <state key="normal" title="Button" image="reset.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="clearRouteAndAll:" destination="DlD-lS-cJO" eventType="touchUpInside" id="9zA-0I-Osd"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S7D-f9-O9t">
                                 <rect key="frame" x="245" y="472" width="50" height="55"/>
                                 <state key="normal" title="Button" image="start.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -306,10 +315,36 @@
                                     <action selector="beginRouteNow:" destination="DlD-lS-cJO" eventType="touchUpInside" id="y3e-fE-DAp"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rWc-Ub-APR">
+                                <rect key="frame" x="0.0" y="531" width="324" height="37"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mbw-eT-btK">
+                                <rect key="frame" x="84" y="535" width="153" height="30"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
+                                <state key="normal" title="Feeling Adventures">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <color key="titleShadowColor" red="0.98823535442352295" green="0.3333333432674408" blue="0.12156863510608673" alpha="1" colorSpace="deviceRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="feelingLucky:" destination="DlD-lS-cJO" eventType="touchUpInside" id="pNl-IF-XgO"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="ZfT-uj-XeL">
+                        <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" image="back.png" id="bG5-cP-bZl">
+                            <inset key="imageInsets" minX="-19" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <segue destination="25x-5G-pPV" kind="show" id="IDE-Fm-iX4"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Invite Friends" id="Dhh-Q7-U9o">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
@@ -325,16 +360,19 @@
                         <outlet property="destinationLabel" destination="hGv-gg-ceJ" id="kU0-Xi-kCT"/>
                         <outlet property="distanceLabel" destination="6cK-GX-maN" id="3Yo-K6-Ow5"/>
                         <outlet property="endAddress" destination="zoC-Ao-iEO" id="xk5-dE-l5R"/>
+                        <outlet property="goButton" destination="S7D-f9-O9t" id="mGc-fb-1sz"/>
+                        <outlet property="luckyButton" destination="Mbw-eT-btK" id="lTS-ky-LHN"/>
                         <outlet property="mapView" destination="Eya-4Z-mnM" id="vY8-tc-Q3d"/>
                         <outlet property="myAddress" destination="zDq-sC-0vu" id="l6n-Vc-3xV"/>
                         <outlet property="nav" destination="ZfT-uj-XeL" id="L7G-uY-cJs"/>
+                        <outlet property="resetButton" destination="y9u-Qg-L8v" id="kNA-Q8-Bu3"/>
                         <outlet property="steps" destination="t9A-tk-PUC" id="jcF-6m-bWf"/>
                         <outlet property="transportLabel" destination="iXw-k8-RDU" id="wyw-yF-NQl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MW0-cy-cQf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2196" y="351"/>
+            <point key="canvasLocation" x="2200" y="351"/>
         </scene>
         <!--Add Friend View Controller-->
         <scene sceneID="PGP-d4-Vov">
@@ -464,13 +502,14 @@
         <image name="challenge.png" width="186" height="210"/>
         <image name="pin.png" width="20" height="33"/>
         <image name="popup.png" width="487" height="245"/>
+        <image name="reset.png" width="106" height="115"/>
         <image name="ride.png" width="186" height="210"/>
         <image name="safety.png" width="186" height="210"/>
         <image name="settings.png" width="186" height="210"/>
         <image name="start.png" width="106" height="115"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="tjb-mG-wwv"/>
+        <segue reference="IDE-Fm-iX4"/>
         <segue reference="LIH-M8-qDT"/>
     </inferredMetricsTieBreakers>
 </document>

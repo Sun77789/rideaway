@@ -26,7 +26,10 @@
 @property (strong, nonatomic) NSString *src;
 @property (strong, nonatomic) NSString *dst;
 
+@property (strong, nonatomic) IBOutlet UIButton *luckyButton;
 @property (strong, nonatomic) IBOutlet UINavigationItem *nav;
+@property (strong, nonatomic) IBOutlet UIButton *goButton;
+@property (strong, nonatomic) IBOutlet UIButton *resetButton;
 
 @end
 

@@ -102,6 +102,46 @@ bool locationsearch;
         [self InitCurrLocation];
     }
     [self condition];
+    
+    [self.navigationController setNavigationBarHidden:NO];
+    
+    self.luckyButton.titleLabel.font = [UIFont fontWithName:@"Hero-Light" size:17.0];
+    [self SetGesture];
+}
+
+-(void) SetGesture {
+    UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc]
+                                          initWithTarget:self action:@selector(handleGesture:)];
+    lpgr.minimumPressDuration = 1.5;  //user must press for 2 seconds
+    [self.mapView addGestureRecognizer:lpgr];
+}
+
+- (void)handleGesture:(UIGestureRecognizer *)gestureRecognizer
+{
+    if (gestureRecognizer.state != UIGestureRecognizerStateEnded)
+        return;
+    
+    CGPoint touchPoint = [gestureRecognizer locationInView:self.mapView];
+    CLLocationCoordinate2D touchMapCoordinate =
+    [self.mapView convertPoint:touchPoint toCoordinateFromView:self.mapView];
+    
+    MKPointAnnotation *pa = [[MKPointAnnotation alloc] init];
+    pa.coordinate = touchMapCoordinate;
+    [self.mapView addAnnotation:pa];
+    
+    CLLocation *dstLoc = [[CLLocation alloc] initWithCoordinate:touchMapCoordinate altitude:0 horizontalAccuracy:0 verticalAccuracy:100 course:0 speed:0 timestamp:0];
+    
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [geocoder reverseGeocodeLocation:dstLoc completionHandler:^(NSArray *placemarks, NSError *error) {
+        if (placemarks && placemarks.count > 0) {
+            CLPlacemark *placemark = [placemarks objectAtIndex:0];
+            NSString *address = [NSString stringWithFormat:@"%@ %@ %@ %@", [placemark subThoroughfare] ? [placemark subThoroughfare] : @"" , [placemark thoroughfare] ? [placemark thoroughfare] : @"", [placemark locality] ? [placemark locality] : @"", [placemark administrativeArea] ? [placemark administrativeArea] : @"the location"];
+            
+            thePlacemark = placemark;
+            [self MarkRoute];
+            self.goButton.hidden = FALSE;
+        }
+    }];
 }
 
 -(void) condition {
@@ -169,6 +209,7 @@ bool locationsearch;
 - (IBAction)searchBox:(UITextField *)sender {
     self.dstLabel = sender.text;
     [self DrawRouteGivenDst:sender.text startAt:nil];
+    self.goButton.hidden = FALSE;
 }
 
 - (void) DrawRouteGivenDst: (NSString *) text startAt: (MKPlacemark *) start {
@@ -204,7 +245,7 @@ bool locationsearch;
     float spanX = 0.01725;
     float spanY = 0.01725;
     self.location = self.locationManager.location;
-    NSLog(@"Current Location: %@", self.locationManager.location.description); //A quick NSLog to show us that location data is being received.
+    
     MKCoordinateRegion region;
     region.center.latitude = self.locationManager.location.coordinate.latitude;
     region.center.longitude = self.locationManager.location.coordinate.longitude;
@@ -307,33 +348,40 @@ bool locationsearch;
 }
 
 - (IBAction)beginRouteNow:(id)sender {
-    [self InitCurrLocation];
-    CLLocation *loc_a = self.location;
-    CLLocation *loc_b = thePlacemark.location;
-    double distance = [loc_a distanceFromLocation:loc_b];
-    self.secondsCount = routeDetails.expectedTravelTime /60;
-    
-    self.countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerRun) userInfo:nil repeats:YES];
-    
-    NSString *msg = @"Bryan just started his ride.";
-    if(self.src) {
-        [PFCloud callFunctionInBackground:@"SMS"
-                           withParameters:@{
-                                            @"fromName": @"Bryan",
-                                            @"toNum": @"3122135143",
-                                            @"msg": msg,
+    if(self.dstLabel) {
+        [self InitCurrLocation];
+        CLLocation *loc_a = self.location;
+        CLLocation *loc_b = thePlacemark.location;
+        double distance = [loc_a distanceFromLocation:loc_b];
+        self.secondsCount = routeDetails.expectedTravelTime /60;
+        
+        self.countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerRun) userInfo:nil repeats:YES];
+        
+        NSString *msg = @"Bryan just started his ride.";
+        if(self.src) {
+            [PFCloud callFunctionInBackground:@"SMS"
+                               withParameters:@{
+                                                @"fromName": @"Bryan",
+                                                @"toNum": @"3122135143",
+                                                @"msg": msg,
+                                                }
+                                        block:^(NSString *result, NSError *error) {
+                                            if (error) {
+                                                NSLog(@"ERROR: %@",error);
+                                            } else {
+                                                NSLog(@"%@", result);
                                             }
-                                    block:^(NSString *result, NSError *error) {
-                                        if (error) {
-                                            NSLog(@"ERROR: %@",error);
-                                        } else {
-                                            NSLog(@"%@", result);
-                                        }
-                                        UIPopoverController *popOver = (UIPopoverController *)self.presentedViewController;
-                                        [popOver dismissPopoverAnimated:YES];
-                                    }];
+                                        }];
+        }
     }
-    
+    self.goButton.hidden = TRUE;
+    self.resetButton.hidden = FALSE;
+}
+
+- (IBAction)clearRouteAndAll:(id)sender {
+    self.resetButton.hidden = TRUE;
+    self.goButton.hidden = FALSE;
+    [self Clear];
 }
 
 - (void) timerRun {
@@ -732,6 +780,34 @@ NSArray *feelingAdventurous(CLLocation *myLocation, int radius, int step){
     NSArray *routes=[arrayOfAllRoutes copy];
     return routes;
     
+}
+- (IBAction)feelingLucky:(id)sender {
+    MKLocalSearchRequest *request = [[MKLocalSearchRequest alloc] init];
+    request.naturalLanguageQuery = @"Restaurants";
+    request.region = self.mapView.region;
+    MKLocalSearch *search = [[MKLocalSearch alloc] initWithRequest:request];
+    
+    [search startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error) {
+        NSLog(@"Map Items: %@", response.mapItems);
+       
+        float spanX = 0.02725;
+        float spanY = 0.02725;
+        self.location = self.locationManager.location;
+        MKCoordinateRegion region;
+        region.center.latitude = self.locationManager.location.coordinate.latitude;
+        region.center.longitude = self.locationManager.location.coordinate.longitude;
+        
+        region.span = MKCoordinateSpanMake(spanX, spanY);
+        [self.mapView setRegion:region animated:YES];
+        
+        for(MKMapItem *item in response.mapItems) {
+            if(item.placemark) {
+                [self.mapView addAnnotation: item.placemark];
+            }
+        }
+    }];
+    
+    //[self DrawRouteGivenDst:address startAt:nil];
 }
 
 @end
