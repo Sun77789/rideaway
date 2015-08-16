@@ -9,15 +9,20 @@
 #import "ViewController.h"
 #import <AddressBookUI/AddressBookUI.h>
 #import "AddFriendViewController.h"
+#import <Parse/Parse.h>
 
 @interface ViewController () <CLLocationManagerDelegate,UIPopoverPresentationControllerDelegate>
 @property (strong, nonatomic) CLLocationManager *locationManager;
+@property NSArray *colors;
+@property (strong, nonatomic) NSTimer *countDownTimer;
+@property (nonatomic) int secondsCount;
 @end
 
 @implementation ViewController
 
 CLPlacemark *thePlacemark;
 MKRoute *routeDetails;
+int counter = 1;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -42,6 +47,7 @@ MKRoute *routeDetails;
     
     [self InitCurrLocation];
     [self SetUpNavBar];
+    //[self DrawRouteGivenDst: @"801 Church Street, Mountain View"];
 }
 
 - (void) SetUpNavBar {
@@ -50,6 +56,7 @@ MKRoute *routeDetails;
     UIColor *tintColor = [UIColor blackColor];
     [[UINavigationBar appearance] setBarTintColor:tintColor];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    self.colors = [[NSArray alloc] initWithObjects: [UIColor redColor], [UIColor yellowColor], nil];
 }
 
 // Delegate method
@@ -57,8 +64,8 @@ MKRoute *routeDetails;
     CLLocation* loc = [locations lastObject]; // locations is guaranteed to have at least one object
     float latitude = loc.coordinate.latitude;
     float longitude = loc.coordinate.longitude;
-    NSLog(@"Latitude: %.8f",latitude);
-    NSLog(@"Longitude: %.8f",longitude);
+    //NSLog(@"Latitude: %.8f",latitude);
+    //NSLog(@"Longitude: %.8f",longitude);
 }
 
 - (IBAction)searchBox:(UITextField *)sender {
@@ -71,14 +78,13 @@ MKRoute *routeDetails;
         if (error) {
             NSLog(@"%@", error);
         } else {
-            [self Clear];
             CGRect newFrame = self.mapView.frame;
             newFrame.size = CGSizeMake(23.0, 50.0);
             self.mapView.frame = newFrame;
             
             thePlacemark = [placemarks lastObject];
-            float spanX = 0.00725;
-            float spanY = 0.00725;
+            float spanX = 0.00825;
+            float spanY = 0.00825;
             MKCoordinateRegion region;
             region.center.latitude = thePlacemark.location.coordinate.latitude;
             region.center.longitude = thePlacemark.location.coordinate.longitude;
@@ -131,7 +137,8 @@ MKRoute *routeDetails;
 
 -(MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
     MKPolylineRenderer  * routeLineRenderer = [[MKPolylineRenderer alloc] initWithPolyline:routeDetails.polyline];
-    routeLineRenderer.strokeColor = [UIColor redColor];
+    routeLineRenderer.strokeColor = [self.colors objectAtIndex: (counter+1) % 2]; // [UIColor redColor];
+    counter++;
     routeLineRenderer.lineWidth = 5;
     return routeLineRenderer;
 }
@@ -169,6 +176,7 @@ MKRoute *routeDetails;
             NSLog(@"RouteButtonPressed: Error %@", error.description);
         } else {
             routeDetails = response.routes.lastObject;
+            
             [self.mapView addOverlay:routeDetails.polyline];
             self.destinationLabel.text = [placemark.addressDictionary objectForKey:@"Street"];
             self.distanceLabel.text = [NSString stringWithFormat:@"%0.1f Miles", routeDetails.distance/1609.344];
@@ -183,6 +191,54 @@ MKRoute *routeDetails;
             }
         }
     }];
+}
+
+- (IBAction)beginRouteNow:(id)sender {
+    [self InitCurrLocation];
+    CLLocation *loc_a = self.location;
+    CLLocation *loc_b = thePlacemark.location;
+    double distance = [loc_a distanceFromLocation:loc_b];
+    self.secondsCount = routeDetails.expectedTravelTime /60;
+    
+    self.countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerRun) userInfo:nil repeats:YES];
+    
+}
+
+- (void) timerRun {
+//    PFQuery *query = [PFQuery queryWithClassName:@"UserStats"];
+//    [query whereKey:@"user" equalTo:[PFUser currentUser]];
+    
+    //NSLog(@"%s", );
+    self.secondsCount -= 1;
+    int minutes = self.secondsCount / 60;
+    
+    // DON"T FORGET THIS PARRT!!!!!
+    CLLocation *loc_a = self.locationManager.location;
+    CLLocation *loc_b = thePlacemark.location;
+    
+    double distance = [loc_a distanceFromLocation:loc_b];
+    if(minutes == 5) {
+        PFUser *user = [PFUser currentUser];
+        NSString *name = user[@"name"];
+        NSString *msg = @"Malika Aubakirova is inviting you to take a ride. Please, visit Rideaway.";
+        //NSString *url = createURLWithCompressedRouteInfo(self.routeDetails);
+        
+        [PFCloud callFunctionInBackground:@"SMS"
+                           withParameters:@{
+                                            @"fromName": name,
+                                            @"toNum": user[@"friendPhoneNumber"],
+                                            @"msg": msg,
+                                            }
+                                    block:^(NSString *result, NSError *error) {
+                                        if (error) {
+                                            NSLog(@"ERROR: %@",error);
+                                        } else {
+                                            NSLog(@"%@", result);
+                                        }
+                                        UIPopoverController *popOver = (UIPopoverController *)self.presentedViewController;
+                                        [popOver dismissPopoverAnimated:YES];
+                                    }];
+    }
 }
 
 - (void) MarkRoute {
@@ -240,7 +296,7 @@ MKRoute *routeDetails;
 {
     if ([segue.identifier isEqualToString:@"popoverSegue"]) {
         AddFriendViewController *dvc = (AddFriendViewController *) segue.destinationViewController;
-        dvc.routeDetails = routeDetails;
+        [dvc setRouteDetails:routeDetails];
         UIPopoverPresentationController *controller = dvc.popoverPresentationController;
         if (controller) {
             controller.delegate = self;

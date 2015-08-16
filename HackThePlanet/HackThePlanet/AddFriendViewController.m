@@ -26,16 +26,19 @@
 }
 
 - (IBAction)inviteAFriend:(id)sender {
-    //NSString *miles = @"15";
+    PFUser *user = [PFUser currentUser];
+    user[@"friendPhoneNumber"] = self.phoneNumber.text;
+    [user saveInBackground];
+    
     NSString *name = @"Malika Aubakirova";
-    NSString *url = createURLWithCompressedRouteInfo(self.routeDetails);
-    //miles = url;
+    NSString *msg = @"Malika Aubakirova is inviting you to take a ride. Please, visit Rideaway.";
+    //NSString *url = createURLWithCompressedRouteInfo(self.routeDetails);
     
     [PFCloud callFunctionInBackground:@"SMS"
                        withParameters:@{
                                         @"fromName": name,
                                         @"toNum": self.phoneNumber.text,
-                                        @"miles": url,
+                                        @"msg": msg,
                                         }
                                 block:^(NSString *result, NSError *error) {
                                     if (error) {
@@ -43,7 +46,10 @@
                                     } else {
                                         NSLog(@"%@", result);
                                     }
+                                    UIPopoverController *popOver = (UIPopoverController *)self.presentedViewController;
+                                    [popOver dismissPopoverAnimated:YES];
                                 }];
+    
 }
 
 
@@ -170,13 +176,12 @@ NSString *createURLWithCompressedRouteInfo(MKRoute *route){
     kiss_fft_cpx *fin=malloc(2*numPoints*sizeof(kiss_fft_cpx));
     kiss_fft_cpx *fout=malloc(2*numPoints*sizeof(kiss_fft_cpx));
     int i=0;
-    for(i=0;i<numPoints;i++){
-        
+    for(i=0;i<numPoints;i++) {
         fin[i].r=points[i].x;
         fin[i].i=points[i].y;
     }
-    for(i=1;i<=numPoints;i++){
-        
+    
+    for(i=1;i<=numPoints;i++) {
         fin[i].r=points[numPoints-i].x;
         fin[i].i=points[numPoints-i].y;
     }
@@ -186,23 +191,18 @@ NSString *createURLWithCompressedRouteInfo(MKRoute *route){
     
     
     float *byteInfo=malloc(36*sizeof(float));
-    
     byteInfo[0]=start.x;
     byteInfo[1]=start.y;
     byteInfo[2]=end.x;
     byteInfo[3]=end.y;
     
     
-    for(i=4;i<36;i++){
+    for(i=4;i<36;i++) {
         byteInfo[i]=sqrt(fout[i].r*fout[i].r+fout[i].i*fout[i].i);
     }
     
     NSString *appString=[NSString stringWithFormat:@"rideaway://"];
     NSString *routeInfo=[[NSString alloc]initWithBytes:byteInfo length:36*sizeof(float) encoding:NSUTF8StringEncoding];
-    
-    if(!routeInfo){
-        NSLog(@"route info is nil");
-    }
     
     NSString *urlString=[appString stringByAppendingString:routeInfo];
     

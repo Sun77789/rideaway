@@ -18,16 +18,25 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    NSLog(@"I was here");
     // Initialize Parse.
     [Parse setApplicationId:@"0GgSojokFNkQJi5HWFANFAlyqU9ZWe87UgZglQUH"
                   clientKey:@"Eem0mGbiWXnuFYrkdbFGmYgtvLXUkIXMoI75nzXM"];
     // Check if user is cached and linked to Facebook, if so, bypass login
     
-    PFObject *testObject = [PFObject objectWithClassName:@"user"];
-    testObject[@"email"] = @"aubakirova.m.m@gmail.com";
-    testObject[@"cell"] = @"1231233322";
-    [testObject saveInBackground];
+    [PFUser enableAutomaticUser];
+    [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        // this will output second and have a username and object id.
+        PFUser *user = [PFUser currentUser];
+        user[@"name"] = @"Malika Aubakirova";
+        user[@"email"] = @"test@rideaway.com";
+        [user saveInBackground];
+    }];
+    
+    
+//    PFObject *testObject = [PFObject objectWithClassName:@"user"];
+//    testObject[@"email"] = @"aubakirova.m.m@gmail.com";
+//    testObject[@"cell"] = @"1231233322";
+//    [testObject saveInBackground];
     
     return YES;
 }

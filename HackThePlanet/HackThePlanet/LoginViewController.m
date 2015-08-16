@@ -60,8 +60,8 @@
     CLLocation* loc = [locations lastObject]; // locations is guaranteed to have at least one object
     float latitude = loc.coordinate.latitude;
     float longitude = loc.coordinate.longitude;
-    NSLog(@"Latitude: %.8f",latitude);
-    NSLog(@"Longitude: %.8f",longitude);
+//    NSLog(@"Latitude: %.8f",latitude);
+//    NSLog(@"Longitude: %.8f",longitude);
 }
 
 - (void)didReceiveMemoryWarning {

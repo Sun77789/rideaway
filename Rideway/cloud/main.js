@@ -32,8 +32,7 @@ twilio.initialize("AC4b1ffd82634bdb9f7ae3a832ae48a88c","8e1f2683bf7c93ec948cbbf1
 
 Parse.Cloud.define("SMS", function(request, response) {
 	var fromName = request.params.fromName;
-	var miles = request.params.miles;
-	var msg = "Good afternoon! "+fromName+" is "+miles+" miles away!";
+	var msg = request.params.msg;
 	// Use the Twilio Cloud Module to send an SMS
 	twilio.sendSMS({
 	  From: "+18725298584",
