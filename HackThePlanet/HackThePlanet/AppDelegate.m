@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
+#import "LoginViewController.h"
 
 @interface AppDelegate ()
 
@@ -29,19 +30,22 @@
         PFUser *user = [PFUser currentUser];
         user[@"name"] = @"Malika Aubakirova";
         user[@"email"] = @"test@rideaway.com";
+        user[@"shared"] = @"0";
         [user saveInBackground];
     }];
-    
-    
-//    PFObject *testObject = [PFObject objectWithClassName:@"user"];
-//    testObject[@"email"] = @"aubakirova.m.m@gmail.com";
-//    testObject[@"cell"] = @"1231233322";
-//    [testObject saveInBackground];
     
     return YES;
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    if([[url scheme] containsString:@"rideaway://"]) {
+        
+        LoginViewController *controller = (LoginViewController *)self.window.rootViewController;
+        controller.src = @"Sunnyvale";
+        controller.dst = @"801 Church Street, Mountain View";
+        
+         NSLog(@"GOOOD!");
+    }
     return YES;
 }
 

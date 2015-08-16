@@ -23,6 +23,8 @@
 @property (strong, nonatomic) IBOutlet UITextView *steps;
 
 @property (strong, nonatomic) NSString *allSteps;
+@property (strong, nonatomic) NSString *src;
+@property (strong, nonatomic) NSString *dst;
 
 @property (strong, nonatomic) IBOutlet UINavigationItem *nav;
 

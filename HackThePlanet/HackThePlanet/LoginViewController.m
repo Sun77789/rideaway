@@ -11,6 +11,8 @@
 #import <CoreLocation/CoreLocation.h>
 #import <AddressBookUI/AddressBookUI.h>
 
+#import "ViewController.h"
+
 @interface LoginViewController () <CLLocationManagerDelegate>
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @end
@@ -19,6 +21,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if(self.src) {
+        [self performSelector:@selector(showMainMenu) withObject:nil afterDelay:0.1];
+    }
+    
     [self LocationSetUp];
     // Do any additional setup after loading the view.
     _pageTitles = @[@"Over 200 Tips and Tricks", @"Discover Hidden Features", @"Bookmark Favorite Tip", @"Free Regular Update"];
@@ -38,6 +45,10 @@
     [self addChildViewController:_pageViewController];
     [self.view addSubview:_pageViewController.view];
     [self.pageViewController didMoveToParentViewController:self];
+}
+
+- (void)showMainMenu {
+    [self performSegueWithIdentifier:@"RideShare" sender:self];
 }
 
 - (void) LocationSetUp {
@@ -69,15 +80,20 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"RideShare"]) {
+        ViewController *dvc = (ViewController *) segue.destinationViewController;
+        [dvc setSrc:self.src];
+        [dvc setDst:self.dst];
+    }
 }
-*/
+
+
 
 
 - (PageContentViewController *)viewControllerAtIndex:(NSUInteger)index

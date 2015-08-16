@@ -10,6 +10,24 @@
 #import <AddressBookUI/AddressBookUI.h>
 #import "AddFriendViewController.h"
 #import <Parse/Parse.h>
+#import "SparkCoreConnector.h"
+#import "SparkTransactionPost.h"
+#import "SparkTransactionGet.h"
+
+#define ACCESS_TOKEN @"2432dc921398e4a0b958b3b8a7262f5eba6a4458"
+#define DEVICE_ID @"54ff6b066667515123381367"
+#define FUNCTION @"led"
+#define COUNT_VAR @"myvar"
+
+#define greenLED1 @"D0"
+#define greenLED2 @"D1"
+#define yellowLED1 @"D2"
+#define yellowLED2 @"D3"
+#define redLED1 @"D4"
+#define redLED2 @"D5"
+
+#define STATE_HIGH @"HIGH"
+#define STATE_LOW @"LOW"
 
 @interface ViewController () <CLLocationManagerDelegate,UIPopoverPresentationControllerDelegate>
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -23,9 +41,25 @@
 CLPlacemark *thePlacemark;
 MKRoute *routeDetails;
 int counter = 1;
+bool locationsearch;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self SetUpNavBar];
+    if(self.src && self.dst) {
+        CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+        [geocoder geocodeAddressString:self.src completionHandler:^(NSArray *placemarks, NSError *error) {
+            
+            if (error) {
+                NSLog(@"%@", error);
+            } else {
+                MKPlacemark *srcPlacement = [placemarks lastObject];
+                [self addAnnotation:srcPlacement andTitle:@"Malika's start"];
+                [self DrawRouteGivenDst: self.dst startAt:srcPlacement];
+            }
+        }];
+    }
+    
     self.mapView.delegate = self;
     
     self.locationManager = [[CLLocationManager alloc] init];
@@ -45,18 +79,65 @@ int counter = 1;
                         action:@selector(resignFirstResponder)
               forControlEvents:UIControlEventEditingDidEndOnExit];
     
-    [self InitCurrLocation];
-    [self SetUpNavBar];
-    //[self DrawRouteGivenDst: @"801 Church Street, Mountain View"];
+    locationsearch = FALSE;
+    if(!self.src) {
+        [self InitCurrLocation];
+    }
+    [self condition];
 }
 
+-(void) condition {
+    NSString *pin = greenLED1;
+    NSString *pin1 = greenLED2;
+  //  NSString *pin2 = yellowLED1;
+  //  NSString *pin3 = yellowLED2;
+    NSString *pin4 = redLED1;
+    NSString *pin5 = redLED2;
+    NSString *state = STATE_HIGH;
+    NSString *param;
+    
+    if (locationsearch==TRUE)
+    {
+        // Insert here
+        state = STATE_LOW; // Red lights up
+        // state = STATE_HIGH // Green lights up
+        param = [NSString stringWithFormat:@"%@%@:%@",pin,pin1,state];
+        
+    }
+    
+    else
+    {
+        state = STATE_LOW;
+        param = [NSString stringWithFormat:@"%@%@:%@",pin4,pin5,state];
+    }
+    [self sendRequestWithParameter:param];
+
+}
+
+-(void)sendRequestWithParameter:(NSString *)parameter {
+    NSLog(@"Params: %@",parameter);
+    SparkTransactionPost *postTransaction = [[SparkTransactionPost alloc] initWithAccessToken:ACCESS_TOKEN deviceId:DEVICE_ID functionName:FUNCTION andParameters:parameter];
+    
+    [SparkCoreConnector connectToSparkAPIWithTransaction:postTransaction andHandler:^(NSURLResponse *response, NSDictionary *responseDictionary, NSError *error){
+        if(error == nil) {
+            NSLog(@"Response: %@",responseDictionary);
+        } else {
+            NSLog(@"Error: %@",error);
+        }
+    }];
+    
+    NSLog(@"Continueing with app");
+    
+}
+
+
 - (void) SetUpNavBar {
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    //[[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     //UIColor *tintColor = [UIColor colorWithRed:235.0/255.0 green:69.0/255.0 blue:17.0/255.0 alpha:1];
     UIColor *tintColor = [UIColor blackColor];
     [[UINavigationBar appearance] setBarTintColor:tintColor];
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-    self.colors = [[NSArray alloc] initWithObjects: [UIColor redColor], [UIColor yellowColor], nil];
+    //[[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    self.colors = [[NSArray alloc] initWithObjects: [UIColor redColor], [UIColor blueColor], [UIColor greenColor], nil];
 }
 
 // Delegate method
@@ -69,10 +150,10 @@ int counter = 1;
 }
 
 - (IBAction)searchBox:(UITextField *)sender {
-    [self DrawRouteGivenDst:sender.text];
+    [self DrawRouteGivenDst:sender.text startAt:nil];
 }
 
-- (void) DrawRouteGivenDst: (NSString *) text {
+- (void) DrawRouteGivenDst: (NSString *) text startAt: (MKPlacemark *) start {
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     [geocoder geocodeAddressString:text completionHandler:^(NSArray *placemarks, NSError *error) {
         if (error) {
@@ -92,7 +173,11 @@ int counter = 1;
             [self.mapView setRegion:region animated:YES];
             [self addAnnotation:thePlacemark];
         }
-        [self MarkRoute];
+        if(start) {
+            [self MarkRoute:start];
+        } else {
+            [self MarkRoute];
+        }
     }];
 }
 
@@ -111,6 +196,7 @@ int counter = 1;
     region.span = MKCoordinateSpanMake(spanX, spanY);
     [self.mapView setRegion:region animated:YES];
     [self reverseGeocode:self.location];
+    locationsearch=TRUE;
 }
 
 - (void)reverseGeocode:(CLLocation *)location {
@@ -135,9 +221,17 @@ int counter = 1;
     [self.mapView addAnnotation:point];
 }
 
+- (void)addAnnotation:(CLPlacemark *)placemark andTitle: (NSString *) caption {
+    MKPointAnnotation *point = [[MKPointAnnotation alloc] init];
+    point.coordinate = CLLocationCoordinate2DMake(placemark.location.coordinate.latitude, placemark.location.coordinate.longitude);
+    point.title = caption;
+    [self.mapView addAnnotation:point];
+    [self.mapView selectAnnotation:point animated:YES];
+}
+
 -(MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
     MKPolylineRenderer  * routeLineRenderer = [[MKPolylineRenderer alloc] initWithPolyline:routeDetails.polyline];
-    routeLineRenderer.strokeColor = [self.colors objectAtIndex: (counter+1) % 2]; // [UIColor redColor];
+    routeLineRenderer.strokeColor = [self.colors objectAtIndex: counter % 3]; // [UIColor redColor];
     counter++;
     routeLineRenderer.lineWidth = 5;
     return routeLineRenderer;
@@ -202,6 +296,25 @@ int counter = 1;
     
     self.countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerRun) userInfo:nil repeats:YES];
     
+    NSString *msg = @"Bryan just started his ride.";
+    if(self.src) {
+        [PFCloud callFunctionInBackground:@"SMS"
+                           withParameters:@{
+                                            @"fromName": @"Bryan",
+                                            @"toNum": @"3122135143",
+                                            @"msg": msg,
+                                            }
+                                    block:^(NSString *result, NSError *error) {
+                                        if (error) {
+                                            NSLog(@"ERROR: %@",error);
+                                        } else {
+                                            NSLog(@"%@", result);
+                                        }
+                                        UIPopoverController *popOver = (UIPopoverController *)self.presentedViewController;
+                                        [popOver dismissPopoverAnimated:YES];
+                                    }];
+    }
+    
 }
 
 - (void) timerRun {
@@ -245,6 +358,35 @@ int counter = 1;
     MKDirectionsRequest *directionsRequest = [[MKDirectionsRequest alloc] init];
     MKPlacemark *placemark = [[MKPlacemark alloc] initWithPlacemark:thePlacemark];
     [directionsRequest setSource:[MKMapItem mapItemForCurrentLocation]];
+    [directionsRequest setDestination:[[MKMapItem alloc] initWithPlacemark:placemark]];
+    directionsRequest.transportType = MKDirectionsTransportTypeAutomobile;
+    MKDirections *directions = [[MKDirections alloc] initWithRequest:directionsRequest];
+    [directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
+        if (error) {
+            NSLog(@"RouteButtonPressed: Error %@", error.description);
+        } else {
+            routeDetails = response.routes.lastObject;
+            [self.mapView addOverlay:routeDetails.polyline];
+            self.destinationLabel.text = [placemark.addressDictionary objectForKey:@"Street"];
+            self.distanceLabel.text = [NSString stringWithFormat:@"%0.1f Miles", routeDetails.distance/1609.344];
+            self.transportLabel.text = [NSString stringWithFormat:@"%lu" , routeDetails.transportType];
+            self.allSteps = @"";
+            for (int i = 0; i < routeDetails.steps.count; i++) {
+                MKRouteStep *step = [routeDetails.steps objectAtIndex:i];
+                NSString *newStep = step.instructions;
+                self.allSteps = [self.allSteps stringByAppendingString:newStep];
+                self.allSteps = [self.allSteps stringByAppendingString:@"\n\n"];
+                self.steps.text = self.allSteps;
+            }
+        }
+    }];
+}
+
+- (void) MarkRoute: (MKPlacemark *) start {
+    NSLog(@"DRAW FROM A DIFFERENT POINT");
+    MKDirectionsRequest *directionsRequest = [[MKDirectionsRequest alloc] init];
+    MKPlacemark *placemark = [[MKPlacemark alloc] initWithPlacemark:thePlacemark];
+    [directionsRequest setSource:[[MKMapItem alloc] initWithPlacemark:start]];
     [directionsRequest setDestination:[[MKMapItem alloc] initWithPlacemark:placemark]];
     directionsRequest.transportType = MKDirectionsTransportTypeAutomobile;
     MKDirections *directions = [[MKDirections alloc] initWithRequest:directionsRequest];

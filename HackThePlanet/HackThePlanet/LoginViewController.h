@@ -15,4 +15,7 @@
 @property (strong, nonatomic) NSArray *pageTitles;
 @property (strong, nonatomic) NSArray *pageImages;
 
+@property (strong, nonatomic) NSString *src;
+@property (strong, nonatomic) NSString *dst;
+
 @end
