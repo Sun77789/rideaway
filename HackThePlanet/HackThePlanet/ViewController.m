@@ -446,16 +446,16 @@ bool locationsearch;
         NSString *src = self.myAddress.text;
         NSString *dst = self.dstLabel;
         
-        NSString *srcURLTemp1 = [[src stringByReplacingOccurrencesOfString:@"\n" withString:@""]
-                                  stringByReplacingOccurrencesOfString:@"CA 94043" withString:@""];
+        NSString *srcURLTemp1 = [[src stringByReplacingOccurrencesOfString:@"\n" withString:@" "]
+                                 stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%d",94043]
+                                 withString:@""];
         
-        NSString *srcURLTemp = [srcURLTemp1 stringByReplacingOccurrencesOfString:@"United States" withString:@""];
+        NSString *srcURLTemp = [[srcURLTemp1 stringByReplacingOccurrencesOfString:@"CA" withString:@""]
+                                stringByReplacingOccurrencesOfString:@"United States" withString:@""];
         
         NSString *srcURL = [srcURLTemp stringByReplacingOccurrencesOfString:@" " withString:@"%"];
         
-        NSLog(@"SRC: %@ %@ %@ %@", src, srcURLTemp1, srcURLTemp, srcURL);
-        
-        NSString *dstURLTemp = [dst stringByReplacingOccurrencesOfString:@" " withString:@"%"];
+        NSString *dstURLTemp = [dst stringByReplacingOccurrencesOfString:@" " withString:@"-"];
         NSString *dstURL = [dstURLTemp stringByReplacingOccurrencesOfString:@"CA%94043%United%States" withString:@""];
         
         

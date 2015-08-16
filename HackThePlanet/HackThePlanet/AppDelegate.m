@@ -43,6 +43,9 @@
         LoginViewController *controller = (LoginViewController *)self.window.rootViewController;
         controller.src = @"Sunnyvale";
         controller.dst = @"801 Church Street, Mountain View";
+        NSLog(@"%@ %@ %@", url.scheme, url.relativePath, url.relativeString);
+        NSString *list = url.scheme;
+        NSArray *listItems = [list componentsSeparatedByString:@"?"];
         
          NSLog(@"GOOOD!");
     }

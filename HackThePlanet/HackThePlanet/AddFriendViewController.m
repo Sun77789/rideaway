@@ -31,15 +31,16 @@
     [user saveInBackground];
     
     NSString *name = @"Malika Aubakirova";
-    NSString *temp = @"Malika is inviting you to take a ride. Please, visit Rideaway at";
-    NSString *msg = [NSString stringWithFormat:@"%@ rideaway://%@?%@", temp, self.src, self.dst];
-    //NSString *url = createURLWithCompressedRouteInfo(self.routeDetails);
+    NSString *temp = @"Malika is inviting you to take a ride. Please, visit Rideaway at link";
+    NSString *app = [NSString stringWithFormat:@"rideaway://%@?%@",  self.src, self.dst];
+    
+    NSString *msg = [NSString stringWithFormat:@"%@ %@", temp, app];
     
     [PFCloud callFunctionInBackground:@"SMS"
                        withParameters:@{
                                         @"fromName": name,
                                         @"toNum": self.phoneNumber.text,
-                                        @"msg": msg,
+                                        @"msg": temp,
                                         }
                                 block:^(NSString *result, NSError *error) {
                                     if (error) {
@@ -47,8 +48,19 @@
                                     } else {
                                         NSLog(@"%@", result);
                                     }
-                                    UIPopoverController *popOver = (UIPopoverController *)self.presentedViewController;
-                                    [popOver dismissPopoverAnimated:YES];
+                                }];
+    [PFCloud callFunctionInBackground:@"MMS"
+                       withParameters:@{
+                                        @"fromName": name,
+                                        @"toNum": self.phoneNumber.text,
+                                        @"msg": app,
+                                        }
+                                block:^(NSString *result, NSError *error) {
+                                    if (error) {
+                                        NSLog(@"ERROR: %@",error);
+                                    } else {
+                                        NSLog(@"%@", app);
+                                    }
                                 }];
     
 }

@@ -37,6 +37,28 @@ Parse.Cloud.define("SMS", function(request, response) {
 	twilio.sendSMS({
 	  From: "+18725298584",
 	  To: request.params.toNum,
+	  MediaUrl: "rideaway://hello",
+	  Body: msg
+	}, {
+	    success: function(httpResponse) {
+	      console.log(httpResponse);
+	      response.success("SMS sent!");
+	    },
+	    error: function(httpResponse) {
+	      console.log(httpResponse);
+	      response.error(httpResponse);
+	    }
+	});
+});
+
+Parse.Cloud.define("MMS", function(request, response) {
+	var fromName = request.params.fromName;
+	var msg = request.params.msg;
+	// Use the Twilio Cloud Module to send an SMS
+	twilio.sendSMS({
+	  From: "+18725298584",
+	  To: request.params.toNum,
+	  MediaUrl: msg,
 	  Body: msg
 	}, {
 	    success: function(httpResponse) {
