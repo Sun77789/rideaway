@@ -12,5 +12,6 @@
 
 @interface AddFriendViewController : UIViewController
 @property (strong, nonatomic) IBOutlet UITextField *phoneNumber;
+@property (strong, nonatomic) MKRoute *routeDetails;
 
 @end

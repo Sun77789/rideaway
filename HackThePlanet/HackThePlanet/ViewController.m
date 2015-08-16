@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import <AddressBookUI/AddressBookUI.h>
+#import "AddFriendViewController.h"
 
 @interface ViewController () <CLLocationManagerDelegate,UIPopoverPresentationControllerDelegate>
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -38,6 +39,7 @@ MKRoute *routeDetails;
     [self.endAddress addTarget:self.endAddress
                         action:@selector(resignFirstResponder)
               forControlEvents:UIControlEventEditingDidEndOnExit];
+    
     [self InitCurrLocation];
     [self SetUpNavBar];
 }
@@ -237,7 +239,8 @@ MKRoute *routeDetails;
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"popoverSegue"]) {
-        UIViewController *dvc = segue.destinationViewController;
+        AddFriendViewController *dvc = (AddFriendViewController *) segue.destinationViewController;
+        dvc.routeDetails = routeDetails;
         UIPopoverPresentationController *controller = dvc.popoverPresentationController;
         if (controller) {
             controller.delegate = self;

@@ -26,14 +26,16 @@
 }
 
 - (IBAction)inviteAFriend:(id)sender {
-    NSString *miles = @"15";
+    //NSString *miles = @"15";
     NSString *name = @"Malika Aubakirova";
+    NSString *url = createURLWithCompressedRouteInfo(self.routeDetails);
+    //miles = url;
+    
     [PFCloud callFunctionInBackground:@"SMS"
                        withParameters:@{
                                         @"fromName": name,
-                                        @"friendname": @"Margaret Jack",
                                         @"toNum": self.phoneNumber.text,
-                                        @"miles": miles,
+                                        @"miles": url,
                                         }
                                 block:^(NSString *result, NSError *error) {
                                     if (error) {
@@ -50,7 +52,6 @@
         [PFCloud callFunctionInBackground:@"SMS"
                            withParameters:@{
                                             @"fromName": name,
-                                            @"friendname": @"Margaret Jack",
                                             @"toNum": @"3122135143",
                                             @"miles": miles,
                                             }
@@ -64,8 +65,6 @@
 }
 
 NSArray *generateOrderedMeetingPoints(CLLocation *myLocation, CLLocation *yourLocation, MKMapPoint destination){
-    
-    
     MKMapPoint myMapPoint=MKMapPointForCoordinate([myLocation coordinate]);
     MKMapPoint yourMapPoint=MKMapPointForCoordinate([myLocation coordinate]);
     
@@ -89,10 +88,6 @@ NSArray *generateOrderedMeetingPoints(CLLocation *myLocation, CLLocation *yourLo
     
     
     double searchStep=100;
-    
-    
-    
-    
     searchArea.origin.x=centroid.x-searchStep/2;
     searchArea.origin.y=centroid.y-searchStep/2;
     
@@ -160,7 +155,7 @@ NSArray *generateOrderedMeetingPoints(CLLocation *myLocation, CLLocation *yourLo
     
 }
 
-NSURL *createURLWithCompressedRouteInfo(MKRoute *route){
+NSString *createURLWithCompressedRouteInfo(MKRoute *route){
     MKPolyline *pline=[route polyline];
     
     int numPoints=[pline pointCount];
@@ -212,18 +207,13 @@ NSURL *createURLWithCompressedRouteInfo(MKRoute *route){
     NSString *urlString=[appString stringByAppendingString:routeInfo];
     
     
-    NSURL *url=[NSURL URLWithString:urlString];
-    
-    
     free(byteInfo);
     free(fin);
     free(fout);
     free(points);
     kiss_fft_free(st);
     
-    return url;
-    
-    
+    return urlString;
 }
 
 MKRoute *getRouteFromCompressedUrl(NSURL * url) {
