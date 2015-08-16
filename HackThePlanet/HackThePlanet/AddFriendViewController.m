@@ -114,7 +114,7 @@ NSArray *generateOrderedMeetingPoints(CLLocation *myLocation, CLLocation *yourLo
         
         if(error!=nil){
             return;
-        }else{
+        } else{
             [responseArray initWithArray:response.mapItems];
             
         }
@@ -187,7 +187,6 @@ NSString *createURLWithCompressedRouteInfo(MKRoute *route){
     
     float *byteInfo=malloc(36*sizeof(float));
     
-    
     byteInfo[0]=start.x;
     byteInfo[1]=start.y;
     byteInfo[2]=end.x;
@@ -198,11 +197,12 @@ NSString *createURLWithCompressedRouteInfo(MKRoute *route){
         byteInfo[i]=sqrt(fout[i].r*fout[i].r+fout[i].i*fout[i].i);
     }
     
-    
-    
-    
     NSString *appString=[NSString stringWithFormat:@"rideaway://"];
     NSString *routeInfo=[[NSString alloc]initWithBytes:byteInfo length:36*sizeof(float) encoding:NSUTF8StringEncoding];
+    
+    if(!routeInfo){
+        NSLog(@"route info is nil");
+    }
     
     NSString *urlString=[appString stringByAppendingString:routeInfo];
     

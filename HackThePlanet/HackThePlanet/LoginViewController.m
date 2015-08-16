@@ -7,15 +7,19 @@
 //
 
 #import "LoginViewController.h"
+#import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
+#import <AddressBookUI/AddressBookUI.h>
 
-@interface LoginViewController ()
-
+@interface LoginViewController () <CLLocationManagerDelegate>
+@property (strong, nonatomic) CLLocationManager *locationManager;
 @end
 
 @implementation LoginViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self LocationSetUp];
     // Do any additional setup after loading the view.
     _pageTitles = @[@"Over 200 Tips and Tricks", @"Discover Hidden Features", @"Bookmark Favorite Tip", @"Free Regular Update"];
     _pageImages = @[@"tut-01.png", @"tut-02.png", @"tut-03.png", @"tut-04.png"];
@@ -34,6 +38,30 @@
     [self addChildViewController:_pageViewController];
     [self.view addSubview:_pageViewController.view];
     [self.pageViewController didMoveToParentViewController:self];
+}
+
+- (void) LocationSetUp {
+    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    self.locationManager.distanceFilter = kCLDistanceFilterNone;
+    self.locationManager.delegate = self;
+    // Check for iOS 8. Without this guard the code will crash with "unknown selector" on iOS 7.
+    if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        NSLog(@"Request with authorization");
+        [self.locationManager requestWhenInUseAuthorization];
+        //[self InitCurrLocation];
+    }
+    [self.locationManager startUpdatingLocation];
+}
+
+
+// Delegate method
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    CLLocation* loc = [locations lastObject]; // locations is guaranteed to have at least one object
+    float latitude = loc.coordinate.latitude;
+    float longitude = loc.coordinate.longitude;
+    NSLog(@"Latitude: %.8f",latitude);
+    NSLog(@"Longitude: %.8f",longitude);
 }
 
 - (void)didReceiveMemoryWarning {

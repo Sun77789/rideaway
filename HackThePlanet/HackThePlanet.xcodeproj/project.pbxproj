@@ -20,6 +20,8 @@
 		55FE910A1B7F2E6E0098B943 /* Facebook.plist in Resources */ = {isa = PBXBuildFile; fileRef = 55FE91091B7F2E6E0098B943 /* Facebook.plist */; };
 		A4107F8A1B7FED260022A4FC /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = A4107F891B7FED260022A4FC /* back.png */; };
 		A4107F8E1B8001450022A4FC /* kiss_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = A4107F8C1B8001450022A4FC /* kiss_fft.c */; };
+		A4107F901B8019820022A4FC /* Settings.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A4107F8F1B8019810022A4FC /* Settings.jpg */; };
+		A4107F921B80198A0022A4FC /* Safety.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A4107F911B80198A0022A4FC /* Safety.jpg */; };
 		A48597911B7F0C37009D5822 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A48597901B7F0C37009D5822 /* main.m */; };
 		A48597941B7F0C37009D5822 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A48597931B7F0C37009D5822 /* AppDelegate.m */; };
 		A48597971B7F0C37009D5822 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A48597961B7F0C37009D5822 /* ViewController.m */; };
@@ -107,6 +109,8 @@
 		A4107F8B1B8001450022A4FC /* _kiss_fft_guts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _kiss_fft_guts.h; sourceTree = "<group>"; };
 		A4107F8C1B8001450022A4FC /* kiss_fft.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = kiss_fft.c; sourceTree = "<group>"; };
 		A4107F8D1B8001450022A4FC /* kiss_fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiss_fft.h; sourceTree = "<group>"; };
+		A4107F8F1B8019810022A4FC /* Settings.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Settings.jpg; sourceTree = "<group>"; };
+		A4107F911B80198A0022A4FC /* Safety.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Safety.jpg; sourceTree = "<group>"; };
 		A485978B1B7F0C37009D5822 /* HackThePlanet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HackThePlanet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A485978F1B7F0C37009D5822 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A48597901B7F0C37009D5822 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -305,6 +309,8 @@
 		A4B19DDC1B7FC07F009DE5D6 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				A4107F911B80198A0022A4FC /* Safety.jpg */,
+				A4107F8F1B8019810022A4FC /* Settings.jpg */,
 				A4107F891B7FED260022A4FC /* back.png */,
 				A4B19E0C1B7FE5E3009DE5D6 /* pin.png */,
 				A4B19E061B7FE36C009DE5D6 /* Begin.png */,
@@ -405,6 +411,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4107F901B8019820022A4FC /* Settings.jpg in Resources */,
 				A4B19E041B7FE16E009DE5D6 /* ride-tap.png in Resources */,
 				A4B19E071B7FE36C009DE5D6 /* Begin.png in Resources */,
 				A4B19DE41B7FC23D009DE5D6 /* tut-01.png in Resources */,
@@ -421,6 +428,7 @@
 				A4B19DEA1B7FC23D009DE5D6 /* tut-04.png in Resources */,
 				A4B19DF71B7FDF2A009DE5D6 /* safety.png in Resources */,
 				A4B19DFA1B7FDFB7009DE5D6 /* settings.png in Resources */,
+				A4107F921B80198A0022A4FC /* Safety.jpg in Resources */,
 				A4B19E0D1B7FE5E3009DE5D6 /* pin.png in Resources */,
 				A485979C1B7F0C37009D5822 /* Images.xcassets in Resources */,
 				A4B19DDE1B7FC09A009DE5D6 /* splash.png in Resources */,

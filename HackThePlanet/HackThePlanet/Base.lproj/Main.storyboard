@@ -30,7 +30,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e4Q-nU-vih">
-                                <rect key="frame" x="16" y="432" width="288" height="52"/>
+                                <rect key="frame" x="63" y="433" width="194" height="38"/>
                                 <state key="normal" title="begin" image="Begin.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -82,12 +82,18 @@
                                 <state key="normal" title="Button" image="safety.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="9jy-pI-2YJ" kind="showDetail" id="amB-k9-yXd"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vrx-iH-eAr">
                                 <rect key="frame" x="184" y="243" width="92" height="105"/>
                                 <state key="normal" title="Button" image="settings.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="fQU-dz-D0u" kind="showDetail" id="8ev-t5-Zx1"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G9i-Xj-vZd">
                                 <rect key="frame" x="45" y="243" width="92" height="105"/>
@@ -143,6 +149,30 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zYW-ke-IdO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1426" y="1035"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="GKu-md-vGO">
+            <objects>
+                <viewController id="fQU-dz-D0u" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="lot-Ry-UEx"/>
+                        <viewControllerLayoutGuide type="bottom" id="uNc-Yt-JPL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="JSx-iY-HBI">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Settings.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="fbz-Uz-2hL">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="n4b-nQ-X7J" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1922" y="1035"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="ufC-wZ-h7g">
@@ -354,8 +384,14 @@
                     <view key="view" contentMode="scaleToFill" id="7V0-Th-mX8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Safety.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="icg-FI-BDU">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <nil key="simulatedTopBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hL4-Zl-0ag" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -386,6 +422,8 @@
         <image name="Begin.png" width="426" height="86"/>
         <image name="Challenge.jpg" width="640" height="1136"/>
         <image name="Menu-Reference.png" width="640" height="1136"/>
+        <image name="Safety.jpg" width="640" height="1136"/>
+        <image name="Settings.jpg" width="640" height="1136"/>
         <image name="back.png" width="55" height="55"/>
         <image name="challenge.png" width="186" height="210"/>
         <image name="pin.png" width="20" height="33"/>
@@ -394,6 +432,6 @@
         <image name="settings.png" width="186" height="210"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Hhr-ae-CiN"/>
+        <segue reference="iO4-e5-TU8"/>
     </inferredMetricsTieBreakers>
 </document>
