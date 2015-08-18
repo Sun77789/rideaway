@@ -29,5 +29,5 @@ We plan on fine-tuning the app to make it more stable and reliable for the drive
 - [Rumaisa Mughal](http://devpost.com/rumaiisa)
 - [Bryan Ngadimin](http://devpost.com/bngadimi)
 
-## Submission
+### Submission
 http://devpost.com/software/rideaway
