@@ -148,8 +148,6 @@ bool locationsearch;
 -(void) condition {
     NSString *pin = greenLED1;
     NSString *pin1 = greenLED2;
-  //  NSString *pin2 = yellowLED1;
-  //  NSString *pin3 = yellowLED2;
     NSString *pin4 = redLED1;
     NSString *pin5 = redLED2;
     NSString *state = STATE_HIGH;
@@ -157,13 +155,9 @@ bool locationsearch;
     
     if (locationsearch==TRUE)
     {
-        // Insert here
-        state = STATE_LOW; // Red lights up
-        // state = STATE_HIGH // Green lights up
+        state = STATE_LOW;
         param = [NSString stringWithFormat:@"%@%@:%@",pin,pin1,state];
-        
     }
-    
     else
     {
         state = STATE_LOW;
@@ -190,11 +184,8 @@ bool locationsearch;
 
 
 - (void) SetUpNavBar {
-    //[[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    //UIColor *tintColor = [UIColor colorWithRed:235.0/255.0 green:69.0/255.0 blue:17.0/255.0 alpha:1];
     UIColor *tintColor = [UIColor blackColor];
     [[UINavigationBar appearance] setBarTintColor:tintColor];
-    //[[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     self.colors = [[NSArray alloc] initWithObjects: [UIColor redColor], [UIColor blueColor], [UIColor greenColor], nil];
 }
 
@@ -203,8 +194,6 @@ bool locationsearch;
     CLLocation* loc = [locations lastObject]; // locations is guaranteed to have at least one object
     float latitude = loc.coordinate.latitude;
     float longitude = loc.coordinate.longitude;
-    //NSLog(@"Latitude: %.8f",latitude);
-    //NSLog(@"Longitude: %.8f",longitude);
 }
 
 - (IBAction)searchBox:(UITextField *)sender {
@@ -250,8 +239,6 @@ bool locationsearch;
     MKCoordinateRegion region;
     region.center.latitude = self.locationManager.location.coordinate.latitude;
     region.center.longitude = self.locationManager.location.coordinate.longitude;
-    //region.center.latitude = 37.41;
-    //region.center.longitude = -122.08;
     
     region.span = MKCoordinateSpanMake(spanX, spanY);
     [self.mapView setRegion:region animated:YES];
@@ -385,10 +372,6 @@ bool locationsearch;
 }
 
 - (void) timerRun {
-//    PFQuery *query = [PFQuery queryWithClassName:@"UserStats"];
-//    [query whereKey:@"user" equalTo:[PFUser currentUser]];
-    
-    //NSLog(@"%s", );
     self.secondsCount -= 1;
     int minutes = self.secondsCount / 60;
     
@@ -539,13 +522,12 @@ bool locationsearch;
 }
 
 
-/* Matt's changes */
 typedef struct{
     double dval;
     int index;
     
     
-}indexed_double;
+} indexed_double;
 
 int compare(const void *p, const void *q){
     indexed_double a = *(const indexed_double *)p;
